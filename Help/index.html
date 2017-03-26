@@ -1,0 +1,1408 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<meta name='keywords' content='Astronomy, LX200, SXVR-H9, Scope Simulator' />
+<meta name='description' content='Amateur Astronomy' />
+<title>Russell Archer's App Site</title>
+<link type='text/css' href='_styles/style.css' rel='stylesheet' />	
+</head>
+<body class='bodyStyle'>
+<div class='container'>
+	<div class='pageHeading'>ACP Log Analyzer</div>
+	<div class='contentPage'> 
+		<div class='contentPageContainer'>
+        
+            <img class="floatCenter" src="_images/acplaHead.jpg" />
+ 			<p>&nbsp;</p>
+                        
+            <h3 style="text-align:center">
+            	<a href="_files/ACPLogAnalyzerSetup.msi">Download ACP Log Analyzer Version 1.32<br />
+            	(Released 01 January 2013)</a>
+			</h3>
+                       
+           	<p>&nbsp;</p>
+                        
+            <div>
+				<h3>An Overview of ACP Log Analyzer</h3>
+				<div>
+                    <p>
+                        The ACP Log Analyzer app provides a quick and easy mechanism for generating an informational report on your ACP-based observing 
+                        activities. This can be for the previous evening, the last month, or as long as you've been using ACP (and have the log files 
+                        related to your observing sessions).
+                    </p>
+                    <p>
+                        ACP Log Analyzer makes it easy to find out, for example, what your average pointing error is when slewing to objects, what your
+                        average FWHM is, how many plate solves failed, how many times an auto-focus run succeeded/failed, etc. This can be done for 
+                        a single log or for many hundreds, and you can view summarized information about each log and/or overall results for the entire
+                        set of log files. And ACP Log Analyzer works quickly too, normally completing in a few seconds or less, even when parsing
+                        several hundred logs.
+                    </p>
+                    <p></p>
+				</div>
+				<hr />
+                
+                <h3>Will it damage my logs?!</h3>
+                <div>
+                    <p>
+                        No, ACP Log Analyzer simply <em>reads</em> the contents of one or more of your ACP logs (which are just text files with a .log extension), 
+                        analyzes the text and outputs a summary of the information found. At no time is the contents of any log file altered. 
+                    </p>
+                    <p></p>
+                </div>
+				<hr />
+                                
+                <h3>How to install ACP Log Analyzer</h3>
+                <div>
+                    <p>
+                        ACP Log Analyzer uses a standard Windows installer to install the application. Simply 
+                        <a href="_files/ACPLogAnalyzerSetup.msi">download</a> the latest version of the installer (ACPLogAnalyzerSetup.msi) and save it 
+                        to a temporary location on your hard disk. Double-click the installer and follow the on-screen instructions.
+                    </p>
+                    
+                    <a href="_images/la03.png" class="lightbox" title="ACP Log Analyzer - Installation">
+						<img class="floatCenter" src="_images/la03sm.png" />
+					</a>
+                    <p></p>
+                    
+                    <p>
+                        When installation is complete, a new folder containing a link to launch the ACP Log Analyzer will have been created in your 
+                        <em>Start | All Programs</em> menu:
+                    </p>
+                    
+                    <a href="_images/la04.png" class="lightbox" title="ACP Log Analyzer - Start menu link">
+						<img class="floatCenter" src="_images/la04sm.png" />
+					</a>
+                    <p></p>
+                </div>
+				<hr />
+                                
+                <h3>How to remove ACP Log Analyzer</h3>
+                <div>
+                    <p>
+                        To remove the application, use the Windows Control Panel (e.g. <em>Programs &amp; Features</em> in Windows 7) to uninstall the
+                        application.
+                    </p>
+        
+                    <img class="floatCenter" src="_images/la02.png" />
+                    <p></p>
+                </div>
+				<hr />
+                                
+                <h3>How to use ACP Log Analyzer</h3>
+                <div>
+                    <p>
+                        When you first run the application you'll see the following:
+                    </p>
+                    
+                    <a href="_images/la01.png" class="lightbox" title="ACP Log Analyzer - First-run appearance">
+						<img class="floatCenter" src="_images/la01sm.png" />
+					</a>
+                    <p></p>
+                    
+                    <p>
+                        The first thing to do is tell ACP Log Analyzer which logs to work on. This can be done in a number of ways.
+                    </p>
+                    
+                    <p>
+                    	The first way is to <em>Drag &amp; Drop</em> one or more files and/or folders from Windows Explorer into the <em>Logs</em> list:
+                    </p>
+
+                    <a href="_images/la05.png" class="lightbox" title="ACP Log Analyzer - Drag 'n' Drop files">
+						<img class="floatCenter" src="_images/la05sm.png" />
+					</a>
+                    <p></p>
+                                
+                    <p>
+                    	Another alternative is to click the <strong>Add Single Log</strong> button. This allows you to select a single log file.
+                    </p>
+                                
+                    <p>
+                    	You may also click the <strong>Add All Logs In Path</strong> button. In this case, ACP Log Analyzer will search the folder 
+                        structure specified in the path bar for ACP logs. 
+                    </p>
+                    
+                    <a href="_images/la06.png" class="lightbox" title="ACP Log Analyzer - Searching for log files">
+						<img class="floatCenter" src="_images/la06sm.png" />
+					</a>
+                    <p></p>
+                       
+                    <p>
+                    	Note that whatever method you choose, all logs are briefly examined to determine if they are valid ACP logs (lots of applications
+                        produce logs with a .log extension). Non-ACP logs are rejected.
+                    </p>
+                    
+                    <p>
+                    	The contents of a log may be viewed in your default text editor (e.g. Notepad.exe) by <em>double-clicking</em> either the log contents
+                        window, or, by double-clicking any item in the list of logs.
+                    </p>
+                    
+                    <p>
+                    	If required, you may remove a log from the list by right-clicking it, and then selecting <strong>Remove log from list</strong> 
+                        from the popup menu:
+                    </p>
+                    
+                    <img class="floatCenter" src="_images/la24.png" />
+                    <p></p> 
+ 				</div>
+				<hr />
+                
+				<h3>Generating a report</h3>
+                <div>
+                    <p>
+                        You are now ready to create a report - <strong>simply <em>select</em> (click on) a log in the list</strong> or click the 
+                        <strong>Generate Report On All Logs</strong> button. Whatever method you choose, the report appears in the right-most 
+                        panel in ACP Log Analyzer:
+                    </p>
+                    
+                    <a href="_images/la07.png" class="lightbox" title="ACP Log Analyzer - Viewing the report">
+						<img class="floatCenter" src="_images/la07sm.png" />
+					</a>
+                    <p></p>
+                                        
+                    <p>
+                        The contents of a report may be saved to disk by clicking the <strong>Save Report</strong> button.<br />
+                        You may also view it in your default text editor by double-clicking on the report.
+                    </p>
+                    <p></p>
+                <p></p>
+                </div>          
+				<hr />
+                                
+                <h3>Report configuration details</h3>
+                <div>
+                    <p>
+                        The content of a report may be modified by clicking the report <strong>Configure</strong> button: 
+                    </p>
+                    
+                    <img class="floatCenter" src="_images/la23.png" />
+                    <p></p>  
+                    
+                    <p>
+                        The <strong>Configure Report</strong> window allow you to control which items appear in report output:
+                    </p>
+                    
+                    <a href="_images/la08.png" class="lightbox" title="ACP Log Analyzer - Configure the report">
+						<img class="floatCenter" src="_images/la08sm.png" />
+					</a>
+                    <p></p>
+                    
+                    <p>The following table describes each report property in detail:</p>
+                    <p></p>
+                    
+                    <table class="configHelp">
+                        <tr><td colspan="2" style="text-align:right; font-size:14px"><strong>Report Summary Properties</strong></td></tr>
+                        <tr><td width="285px"><strong>Report Property</strong></td>	<td><strong>Description</strong></td></tr>
+                        <tr><td>Show summary</td>									<td>Shows the report summary if checked, otherwise the summary is not displayed</td></tr>
+                        <tr><td>Show summary at bottom of the page</td>				<td>Shows the summary at the bottom of the report if checked, otherwise the summary will be at the top</td></tr>
+                        <tr><td>Total number of logs parsed</td>					<td>Shows the total number of valid ACP logs parsed. Logs are inspected when they are added to the log list to confirm they are valid ACP logs (lots of applications use the .log file extension)</td></tr>
+                        <tr><td>Total number of unique targets</td>					<td>The overall (for all logs) count of unique observing targets</td></tr>
+                        <tr><td>Total number of images taken</td>					<td>The overall count of successfully completed exposures. This number does <em>not</em> include pointing exposures, auto-focus exposures, etc.</td></tr>
+                        <tr><td>Overall runtime breakdown</td>						<td>Provides an overall time-based breakdown of observing activities. This includes <em>imaging time</em> (the time spent actively taking exposures), <em>wait time</em> (time spent waiting for certain conditions, e.g. plan wait statements such as #WAITFOR, #WAITUNTIL, etc.), <em>observatory overhead</em> (all other time not included in the other categories), <em>imaging as % of runtime</em> (shows the percentage of time spent usefully taking images)</td></tr>
+                        <tr><td>Sort report output by date</td>						<td>Sorts report output by date if checked</td></tr>
+                        <tr><td>Sort report output by date in ascending order</td>	<td>Sorts the output in ascending order if checked, otherwise output is sorted in descending order</td></tr>
+                        <tr><td>Total number of successful auto-focus runs</td>		<td>The overall count of successfully completed auto-focus runs</td></tr>
+                        <tr><td>Total number of unsuccessful auto-focus runs</td>	<td>The overall count of auto-focus runs which did not complete successfully</td></tr>
+                        <tr><td>Total number of successful plate solves</td>		<td>The overall count of successfully completed plate solve operations</td></tr>
+                        <tr><td>Total number of unsuccessful plate solves</td>		<td>The overall count of failed plate solve operations</td></tr>
+                        <tr><td>Overall guider failure/unguided imaging count</td>	<td>The overall count of failed auto-guiding operations</td></tr>
+                        <tr><td>Overall successful all-sky plate solve count</td>	<td>The overall count of successful all-sky plate solve operations <em>(new in 1.32, ACP 7)</em></td></tr>
+                        <tr><td>Overall unsuccessful all-sky plate solve count</td>	<td>The overall count of unsuccessful all-sky plate solve operations  <em>(new in 1.32, ACP 7)</em></td></tr>
+                        <tr>
+                        <td>Overall guider failure/unguided imaging brkdn</td>		<td>Show a breakdown of the log, target and time when the guiding failed (and imaging of a target (not an auto-focus target) continued unguided)</td></tr>
+                        <tr><td>Overall average FWHM</td>							<td>The overall average FWHM for all target images taken in all logs.  FWHM measurements only include data for successful plate-solves on imaging targets (e.g. pointing update FWHM's are ignored)</td></tr>
+                        <tr><td>Overall average HFD</td>							<td>The overall average HFD as reported by FocusMax for all target images taken in all logs. Only applies to successful AF runs</td></tr>
+                        <tr><td>Overall average pointing error (object slew)</td>	<td>The overall average pointing error following a slew to a target. This includes imaging targets, auto-focus targets, returns from auto-focusing, etc.</td></tr>
+                        <tr><td>Overall average pointing error (center slew)</td>	<td>The overall average pointing error following a slew to center an object in the FoV</td></tr>
+                        <tr><td>Overall average auto-focus time</td>				<td>The overall average time taken to successfully complete an auto-focus (failed attempts are ignored). This does not include slew time to target stars. This value is a measure of the time from when ACP hands control to FocusMax until control passes back to ACP</td></tr>
+                        <tr><td>Overall average guider start-up time</td>			<td>The overall average time taken for the guider to successfully start (failed starts are ignored)</td></tr>
+                        <tr><td>Overall average guider settle time</td>				<td>The overall average time taken for the guider to successfully settle (failed attempts are ignored)</td></tr>
+                        <tr><td>Overall average filter change time</td>				<td>The overall average time taken for filter changes (the results for all filters are combined)</td></tr>
+                        <tr><td>Overall average pointing exp/plate solve time</td>	<td>The overall average time taken to successfully complete the process to take a pointing exposure and solve the resulting image (failed attempts are ignored)</td></tr>
+                        <tr><td>Overall average slew time (targets)</td>			<td>The overall average time taken to slew to observing targets (all other types of slews are ignored)</td></tr>
+                        <tr><td>Overall average all-sky plate solve time</td>		<td>The overall average time taken to successfully complete all-sky plate solves <em>(new in 1.32, ACP 7)</em></td></tr>
+                    
+                        <tr><td colspan="2" style="text-align:right; font-size:14px"><strong>Per-Target Details Properties</strong></td></tr>
+                        <tr><td width="285px"><strong>Report Property</strong></td>	<td><strong>Description</strong></td></tr>
+                        <tr><td>Show target details</td>							<td>Displays target details if checked, otherwise all target details are not displayed (although the details of the target are included in other statistics and calculations)</td></tr>
+                        <tr><td>Ignore targets with zero completed exposures</td>	<td>If checked, targets where no images have been successfully taken are ignored (not displayed)</td></tr>
+                        <tr><td>Show target name</td>								<td>Shows the target's name if checked</td></tr>
+                        <tr><td>Completed exposure details</td>						<td>Displays a breakdown of successfully completed exposures, including imaging time, number of images for each filter and binning levels</td></tr>
+                        <tr><td>Total imaging time</td>								<td>Displays the total time spent imaging this target</td></tr>
+                        <tr><td>Average auto-focus time</td>						<td>Displays the average time spent auto-focusing on this target on this target</td></tr>
+                        <tr><td>Average FWHM</td>									<td>Displays the average FWHM for this target.  FWHM measurements only include data for successful plate-solves on imaging targets (e.g. pointing update FWHM's are ignored)</td></tr>
+                        <tr><td>Average HFD</td>									<td>Displays the average HFD as reported by FocusMax for all target images in the selected log. Only applies to successful AF runs</td></tr>
+                        <tr><td>Successful plate solves</td>						<td>Displays the total number of successful plate solves for this target</td></tr>
+                        <tr><td>Unsuccessful plate solves</td>						<td>Displays the total number of unsuccessful plate solves for this target</td></tr>
+                        <tr><td>Successful all-sky plate solves</td>				<td>Displays the total count of successful all-sky plate solve operations for this target <em>(new in 1.32, ACP 7)</em></td></tr>
+                        <tr><td>Unsuccessful all-sky plate solves</td>				<td>Displays the total count of unsuccessful all-sky plate solve operations for this target <em>(new in 1.32, ACP 7)</em></td></tr>
+                        <tr><td>Average pointing error (object slew)</td>			<td>Displays the average pointing error following a slew to a target. A 'target' is defined as an actual imaging target, an auto-focus star and returns to an imaging target from auto-focusing.</td></tr>
+                        <tr><td>Average pointing error (center slew)</td>			<td>Displays the average pointing error following a slew to center this target in the FoV</td></tr>
+                        <tr><td>Successful auto-focus</td>							<td>Displays a count of the number of successful auto-focus runs for this target</td></tr>
+                        <tr><td>Unsuccessful auto-focus</td>						<td>Displays a count of the number of unsuccessful auto-focus runs for this target</td></tr>
+                        <tr><td>Guider failure/unguided imaging count</td>			<td>Displays a count of the number of times guiding failed (and an exposure proceeded unguided) for this target</td></tr>
+                        <tr><td>Guider failure/unguided imaging breakdown</td>		<td>Shows a breakdown of when guiding failed for this target</td></tr>
+                        <tr><td>Average guider start-up time</td>					<td>Displays the average time taken for the guider to successfully start while imaging this target (failed starts are ignored)</td></tr>
+                        <tr><td>Average guider settle time</td>						<td>Displays the average time taken for the guider to settle while imaging this target (failed starts are ignored)</td></tr>
+                        <tr><td>Average filter change time</td>						<td>Displays the average time taken for filter changes while imaging this target (the results for all filters are combined)</td></tr>
+                        <tr><td>Average pointing exposure/plate solve time</td>		<td>Displays the average time taken to successfully complete the process to take a pointing exposure for this target and solve the resulting image (failed attempts are ignored)</td></tr>
+                        <tr><td>Average slew time (targets)</td>					<td>Displays the average time taken to slew to this target (all other types of slews are ignored)</td></tr>
+                        <tr><td>Average all-sky plate solve time</td>				<td>Displays the average time taken to successfully complete all-sky plate solves <em>(new in 1.32, ACP 7)</em></td></tr>
+                    
+                        <tr><td colspan="2" style="text-align:right; font-size:14px"><strong>Log Details Properties</strong></td></tr>
+                        <tr><td width="285px"><strong>Report Property</strong></td>	<td><strong>Description</strong></td></tr>
+                        <tr><td>Ignore logs with zero targets</td>					<td>If checked, logs with no targets are ignored (they are not displayed and all their properties are excluded from other statistics and calculations)</td></tr>
+                        <tr><td>Runtime breakdown</td>								<td>Shows a time-based breakdown of log activity if checked, otherwise the breakdown is not displayed</td></tr>
+                        <tr><td>Script errors</td>									<td>Shows a count of script errors if checked</td></tr>
+                        <tr><td>Script aborts</td>									<td>Shows a count of scripts that were aborted by the user if checked</td></tr>
+                        <tr><td>Log filename</td>									<td>Displays the log's filename (excluding the path) if checked</td></tr>
+                        <tr><td>Log start date</td>									<td>Displays the log's start date/time if checked</td></tr>
+                        <tr><td>Log end date</td>									<td>Displays the log's end date/time if checked</td></tr>
+                    </table>                    
+                </div>      
+				<hr />
+                                          
+				<h3>Generating a graph</h3>
+                <div>
+                    <p>
+                        Log Analyzer allows you to generate 22 different types of graph that plot data points for key observing activities.<br />
+                        Simply select the required graph type and click <strong>Plot</strong>:
+                    </p>
+                    
+					<img class="floatCenter" src="_images/la13.png" />
+                    <p></p>         
+                    
+                    <p>
+                        The graph appears in a floating window, which you can move and resize as required. If you resize the window the 
+                        graph will rescale to take maximum advantage of available space. When you are finished reviewing the graph you 
+                        may either close the window or leave it open (perhaps to compare with another graph - you may have as many
+                        graph windows open as you like):
+                    </p>
+                    <p></p>
+                    
+                    <p></p>
+                    <a href="_images/la12.png" class="lightbox" title="ACP Log Analyzer - Graphs of key observing events">
+                        <img class="floatCenter" src="_images/la12sm.png" />
+                    </a>
+                    <p></p>
+                    
+                    <p>
+                    	The available graphs types are as follows:
+                    </p>   
+                    
+                    <ol>
+                    	<li>All FWHM measurements for the current log</li>
+                    	<li>All HFD measurements for the current log</li> 
+                        <li>A comparision of FWHM verses HFD measurements for the current log</li>                       
+                    	<li>All pointing errors (object slew) for the current log</li>
+                    	<li>All pointing errors (center slew) for the current log</li>
+                    	<li>All guider start-up times for current log</li>
+                    	<li>All guider settle times for current log</li>
+                    	<li>All filter change times for current log</li>
+                    	<li>All pointing exposure/plate solve times for the current log</li>
+                    	<li>All slew times (targets) for the current log</li>
+                    	<li>All-sky plate solve times for current log <em>(new in 1.32, ACP 7)</em></li>
+                        <p></p>
+                        <li>Average FWHM measurements for all logs</li>
+                        <li>Average HFD measurements for all logs</li>                        
+                        <li>A comparision of average FWHM verses HFD measurements for all logs</li>                       
+                    	<li>Average pointing error (object slew) for all logs</li>
+                    	<li>Average pointing errors (center slew) for all logs</li>
+                    	<li>Average guider start-up times for all logs</li>
+                    	<li>Average guider settle times for all logs</li>
+                    	<li>Average filter change times for all logs</li>
+                    	<li>Average pointing exposure/plate solve times for all logs</li>
+                    	<li>Average slew times (targets) for all logs</li>
+                    	<li>Average times for successful all-sky plate solves for all logs <em>(new in 1.32, ACP 7)</em></li>
+
+                    </ol>                            
+	                <p></p>
+                    
+                    <p>
+                    	Every graph displays an <em>average line</em>, indicating the average value for all the graph's data points. 
+                        This line can be hidden by right-clicking anywhere on the graph and selecting <strong>Hide Average</strong>:
+                    </p>
+                    
+                    <p></p>
+                    <img class="floatCenter" src="_images/la27.png" />
+                    <p></p>
+                    
+                    <p>
+                    	If the average line is hidden, it may be re-displayed by right-clicking anywhere on the graph and selecting 
+                        <strong>Show Average</strong>:
+                    </p>
+                    
+                    <p></p>
+                    <img class="floatCenter" src="_images/la28.png" />
+                    <p></p>
+                    
+                    <p>
+                    	You may <em><strong>Export</strong></em> the data from any graph by <em>right-clicking</em> on the graph and selecting 
+                        one of the export options presented in the popup menu:
+                    </p>
+                    
+                    <p></p>
+                    <a href="_images/la25.png" class="lightbox" title="ACP Log Analyzer - Export graph data">
+                        <img class="floatCenter" src="_images/la25sm.png" />
+                    </a>
+                    <p></p>   
+                    
+                    <p>
+                    	Selecting <strong>Export Data to CSV</strong> creates a comma-separated-variable text file, which is in a suitable format for opening with
+                        Excel, Access, and many other commercial applications.
+                    </p>         
+                    
+                    <p>
+                    	Selecting <strong>Export Data to Excel</strong> opens Excel (you must have this installed on your computer) and then 
+                        adds the required data to a blank sheet. You may then create graphs of your data using the more comprehensive features in Excel:
+                    </p>    
+                    
+                    <p></p>
+                    <a href="_images/la26.png" class="lightbox" title="ACP Log Analyzer - Export graph data to Excel">
+                        <img class="floatCenter" src="_images/la26sm.png" />
+                    </a>
+                    <p></p>  
+                    
+                    <p>
+                    	Clicking on any data-point (except on the average line) scrolls the log contents window to highlight
+            			the relevant event. This is only available for single-log graphs (i.e. graphs showing overall averages from multiple
+                        logs do not have associated single events).
+                    </p>  
+                    
+                    <p></p>
+                    <a href="_images/la29.png" class="lightbox" title="ACP Log Analyzer - Datapoint scroll">
+                        <img class="floatCenter" src="_images/la29sm.png" />
+                    </a>
+                    <p></p>                                                 
+                </div>   
+				<hr />
+                                             
+				<h3>Changing the look of graphs</h3>
+                <div>
+                    <p>
+                        Log Analyzer allows you to change the way your graphs look. Click the <strong>Configure</strong> button:
+                    </p>
+                    
+					<img class="floatCenter" src="_images/la17.png" />
+                    <p></p>         
+                    
+                    <p>
+                        The <em>Configure Graph Plot</em> window appears. Graph configuration properties are arranged in six tabs, 
+                        with the <em>Text</em> tab being selected initially by default:
+                    </p>
+                    <p></p>
+                    
+                    <p></p>
+                    <a href="_images/la18.png" class="lightbox" title="ACP Log Analyzer - Graph configuration">
+                        <img class="floatCenter" src="_images/la18sm.png" />
+                    </a>
+                    <p></p>
+                    
+					<p>
+                    	The <em><strong>Text</strong></em> tab allows you to change the appearance of all text on the graph (legend, axis, etc.), except the title 
+                        (see the <em>Title</em> tab). As you make changes to the font, size, color, etc., notice that the example graph
+                        updates to show you what your finished graph will look like. 
+                    </p>
+                    
+                    <p>
+                    	The <em><strong>Title</strong></em> is similar in layout the the Text tab. Here you can set the look of the graph title, which appears
+                        at the top of the window: 
+                    </p>
+                    
+                    <p></p>
+                    <a href="_images/la19.png" class="lightbox" title="ACP Log Analyzer - Graph configuration">
+                        <img class="floatCenter" src="_images/la19sm.png" />
+                    </a>
+                    <p></p>
+                                    
+                    <p>
+                    	The <em><strong>Graph Colors</strong></em> tab allows you to change the background color of the graph. You can also change the
+                        background color of the graph legend: 
+                    </p>
+                    
+                    <p></p>
+                    <a href="_images/la20.png" class="lightbox" title="ACP Log Analyzer - Graph configuration">
+                        <img class="floatCenter" src="_images/la20sm.png" />
+                    </a>
+                    <p></p>      
+                    
+                    <p>
+                    	The <em><strong>Primary Series</strong></em> tab allows you to change the properties of the primary data series.
+                        You can configure the thickness of the graph line, its color, and if you want individual data points to be shown or not.
+                        Note that if you turn data points off, you will no longer be able to hover the mouse over the graph to see individual values: 
+                    </p>
+                    
+                    <p></p>
+                    <a href="_images/la21.png" class="lightbox" title="ACP Log Analyzer - Graph configuration">
+                        <img class="floatCenter" src="_images/la21sm.png" />
+                    </a>
+                    <p></p>   
+                    
+                    <p>
+                    	The <em><strong>Secondary Series</strong></em> and <em><strong>Tertiary</strong></em> (third) <em><strong>Series</strong></em> tabs are similar in layout to the <em>Primary Series</em> tab. 
+                    They allow you to change the properties of the secondary (i.e. <em>graph average</em>) and tertiary (e.g. <em>HFD</em> on the<em> FWHM v HFD</em> graph) data series': </p>
+                    
+                    <p></p>
+                    <a href="_images/la22.png" class="lightbox" title="ACP Log Analyzer - Graph configuration">
+                        <img class="floatCenter" src="_images/la22sm.png" />
+                    </a>
+                    <p></p>                      
+                </div>   
+				<hr />
+                                                                          
+                <h3>Program updates</h3>
+                <div>
+                    <p>
+                        ACP Log Analyzer automatically checks to see if you are running the latest version. If an update is available
+                        you will be asked if you wish to download and install it:
+                    <p>
+                    
+                    <p></p>
+                    <img class="floatCenter" src="_images/la14.png" />
+                    <p></p>
+                    
+                    <p>
+                    	You can either start the download by clicking <strong>Download Update</strong> or defer the upgrade by clicking <strong>No Thanks</strong>.
+                        The next time the application runs you will be reminded about the available update.
+                    </p>
+                    
+                    <p>
+                        To prevent the application checking for updates, uncheck <em>Always check for updates</em>.
+                    </p>
+                    
+                    <p>
+                    	If you decide to proceed with the update, download progress is displayed:
+                    </p>
+                    
+                    <p></p>
+                    <img class="floatCenter" src="_images/la15.png" />
+                    <p></p>
+                    
+                    <p>
+                    	When the download is complete you will be asked if you wish to install the update now:
+                    </p>                    
+                    
+                    <p></p>
+                    <img class="floatCenter" src="_images/la16.png" />
+                    <p></p>
+                    
+                    <p>
+                    	You can opt to install the update, in which case the application will close and the installation of the upgrade will begin.
+                        Alternatively, you can defer the installation by clicking <strong>Don't Install Update</strong>. You will be prompted to install 
+                        the previously downloaded update the next time you run the application.
+                    </p>                    
+                </div>
+				<hr />
+                                
+                <h3>Log Parsing Rules</h3>
+                <div>
+                    <p>
+                        In order that the process used by ACP Log Analyzer when interpreting ACP log files may be transparent 
+                        and open to review and feedback, we present here a simplified version of the <em>parsing rules</em> employed by Analyzer.
+                    <p>
+                    
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>
+                        <td width="850px">Imaging target</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>
+                        <td>"starting target"</td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>
+                        <td>"starting target"</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>
+                        <td>-</td></tr>
+                        
+                        <tr><td><strong>Notes</strong></td>
+                        <td>A new target triggers the end of the previous target</td></tr>       
+                    </table>  
+                    <p></p>    
+
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Target imaging exposure</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"imaging to"</td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>"taking"</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>-</td></tr>
+                        
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>-</td></tr>          
+                    </table>  
+                    <p></p>   
+
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">FWHM measurement</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"image fwhm is"</td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>"imaging to"</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>Pointing update exposure FWHMs</td></tr>
+                        
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>Only imaging exposure FWHMs are recorded (pointing exposure FWHMs are excluded)</td></tr>       
+                    </table>  
+                    <p></p>              
+
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Auto-focus time measurement</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"start slew to autofocus"</td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>"autofocus finished" + successful final plate solve</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>
+                        	Center slew operations<br />
+							FocusMax reports a failure<br />
+							Plate-solve failure (for any reason)
+						</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>
+                            AF time measurement includes: 
+                            <p></p>
+							&nbsp;&nbsp;Time to slew to the AF target<br />
+							&nbsp;&nbsp;Acquiring the AF star (includes a possible plate solve by FocusMax)<br />
+							&nbsp;&nbsp;The actual focusing process handled by FocusMax<br />
+							&nbsp;&nbsp;Re-slew back to the original target<br />
+							&nbsp;&nbsp;Pointing update/slew
+                            <p></p>
+                            Only auto-focus runs which result in successful plate-solves are included in the result set
+						</td></tr>     
+                    </table>  
+                    <p></p>  
+                    
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Pointing error measurement (object slew)</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"start slew to"</td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>"(slew complete)" + successful final plate solve</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>
+                        	Anytime "start slew to" is immediately preceded by "re-slew to target" (this is a 'center' slew)<br />
+							Plate-solve failure (for any reason)
+						</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>
+                        	For our purposes an 'object' slew is defined as: 
+                            <p></p>
+                            &nbsp;&nbsp;Slews to imaging targets (e.g M57, etc.)<br />
+							&nbsp;&nbsp;Slews to auto-focus targets<br />
+							&nbsp;&nbsp;Return slews from AF targets
+                            <p></p>
+                            Only slews which result in successful plate-solves are included in the result set
+						</td></tr>     
+                    </table>  
+                    <p></p>                      
+                    
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Pointing error measurement (center slew)</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"Re-slew to target"</td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>"(slew complete)"</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>
+                        	Anytime "re-slew to target" is immediately followed by "start slew to autofocus" <br />
+                            (there should be no plate-solve after re-slew to a focus star)<br />
+							Plate-solve failure (for any reason)<br />
+						</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>
+                        	Only slews which result in successful plate-solves are included in the result set
+						</td></tr>     
+                    </table>  
+                    <p></p>  
+                    
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Slew (to target) time</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"start slew to"</td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>"slew complete"</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>
+                        	Anytime "start slew to" is immediately preceded by "re-slew to target" (this is a 'center' slew)<br />
+                            Plate-solve failure (for any reason)<br />
+                            Pointing update, re-slew to target or start of slew to new target found while looking for slew completion time
+						</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>
+                        	Only slews which result in successful plate-solves are included in the time result set
+						</td></tr>     
+                    </table>  
+                    <p></p>  
+                    
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Plate solve count</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"solved!"</td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>-</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>
+                        	-
+						</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>
+                        	-
+						</td></tr>     
+                    </table>  
+                    <p></p>  
+                    
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Plate solve error count</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>
+                        	Any of:
+                        	<p></p>
+                            &nbsp;&nbsp;"plate solve error!"<br />
+                            &nbsp;&nbsp;"no matching stars found"<br />
+							&nbsp;&nbsp;"solution is suspect"
+                        </td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>-</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>
+                        	-
+						</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>
+                        	-
+						</td></tr>     
+                    </table>  
+                    <p></p>  
+                    
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Successful auto-focus count and HFD value</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"auto-focus successful!"</td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>HFD = {value}</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>
+                        	-
+						</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>
+                        	-
+						</td></tr>     
+                    </table>  
+                    <p></p> 
+                     
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Auto-focus failure count</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"**autofocus failed"</td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>-</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>
+                        	-
+						</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>
+                        	-
+						</td></tr>     
+                    </table>  
+                    <p></p>  
+                    
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Script error count</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"script error" </td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>-</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>
+                        	-
+						</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>
+                        	-
+						</td></tr>     
+                    </table>  
+                    <p></p>  
+                             
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Script abort count</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"script was aborted"</td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>-</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>
+                        	-
+						</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>
+                        	-
+						</td></tr>     
+                    </table>  
+                    <p></p>  
+                    
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Guider start-up time</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"trying to autoguide"</td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>"autoguiding at"</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>
+                        	-
+						</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>
+                        	-
+						</td></tr>     
+                    </table>  
+                    <p></p>  
+                    
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Guider settle time</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"guider check ok"</td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>"imaging to"</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>
+                        	-
+						</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>
+                        	We start by looking for the successful end of the settle time, then we work backwards to find the start time
+						</td></tr>     
+                    </table>  
+                    <p></p>  
+                    
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Filter change time</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"switching from"</td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>"(taking"</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>
+                        	"(guide star" found while looking for end trigger
+						</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>
+                        	If not doing a pointing update there is no way of working out the filter change time.<br />
+							This is because the change time is included as part of the guider start-up time
+						</td></tr>     
+                    </table>  
+                    <p></p>  
+                    
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Wait time</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"wait until"</td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>"wait finished"</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>
+                        	-
+						</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>
+                        	-
+						</td></tr>     
+                    </table>  
+                    <p></p>  
+                    
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Pointing exposure/plate solve time updates</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"updating pointing" + successful plate-solve</td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>Successful plate-solve time</td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>
+                        	Plate-solve failure (for any reason)
+						</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>
+                        	Only exposures which result in successful plate-solves are included in the time result set
+						</td></tr>     
+                    </table>  
+                    <p></p>   
+                    
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">Guider failure</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>
+                        	Any of:
+                            <p></p>
+                            &nbsp;&nbsp;""**autoguiding failed"<br />
+							&nbsp;&nbsp;""excessive guiding errors"<br />
+							&nbsp;&nbsp;""guider stopped or lost star"
+                        </td></tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>
+                        	Any of:
+                            <p></p>
+                            &nbsp;&nbsp;"will try image again, this time unguided"<br />
+							&nbsp;&nbsp;"**guiding failed, continuing unguided"
+                         </td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>
+                        	Guider failures where imaging did not continue unguided
+						</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>
+                        	Only guider failures where ACP carried on imaging unguided after the failure are included in the result set
+						</td></tr>     
+                    </table>
+                    <p></p>
+                    
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">All-Sky plate solve success count (new in version 1.32, ACP 7)</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"Attempting all-sky plate solution"</td>
+                        </tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>
+                        	Any of:
+                            <p></p>
+                            &nbsp;&nbsp;"All-sky solution failed"<br />
+							&nbsp;&nbsp;"All-sky solution was incorrect"<br />
+                            &nbsp;&nbsp;"All-sky solution successful"
+                         </td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>-</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>Only successful all-sky solves are counted</td></tr>     
+                    </table>  
+                    <p></p>
+                                        
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">All-Sky plate solve failure count (new in version 1.32, ACP 7)</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"Attempting all-sky plate solution"</td>
+                        </tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>
+                        	Any of:
+                            <p></p>
+                            &nbsp;&nbsp;"All-sky solution failed"<br />
+							&nbsp;&nbsp;"All-sky solution was incorrect"<br />
+                            &nbsp;&nbsp;"All-sky solution successful"
+                         </td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>-</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>Only failed all-sky solves are counted</td></tr>     
+                    </table>    
+                    <p></p>
+                                        
+                    <table class="configHelp">
+                        <tr><td width="150px"><strong>Event</strong></td>	
+                        <td width="850px">All-Sky plate solve time (new in version 1.32, ACP 7)</td></tr>
+                        
+                        <tr><td><strong>Start Trigger</strong></td>			
+                        <td>"Attempting all-sky plate solution"</td>
+                        </tr>
+                        
+                        <tr><td><strong>End Trigger</strong></td>			
+                        <td>
+                        	Any of:
+                            <p></p>
+                            &nbsp;&nbsp;"All-sky solution failed"<br />
+							&nbsp;&nbsp;"All-sky solution was incorrect"<br />
+                            &nbsp;&nbsp;"All-sky solution successful"
+                         </td></tr>
+                        
+                        <tr><td><strong>Exclusions</strong></td>			
+                        <td>-</td></tr>
+                                                                            
+                        <tr><td><strong>Notes</strong></td>					
+                        <td>Only successful all-sky solves are used</td></tr>     
+                    </table>                                                          
+                    <p></p>                                                                                                                                                                                                                                                                    
+                </div>
+				<hr />
+                                
+                <h3>Technical details</h3>
+                <div>
+                    <p>
+                        ACP Log Analyzer was developed in Microsoft Visual Studio 2010/2012 using C#, the .NET Framework version 4 
+                        and the Windows Presentation Foundation (WPF).
+                    <p>
+                </div>
+				<hr />
+                                
+                <h3>Requirements</h3>
+                <div>
+                    <ul>
+						<li>Windows XP (32/64-bit), Windows Vista (32/64-bit), Windows 7 (32/64-bit) or Windows 8 (32/64-bit)</li>
+                        <li><a href ="http://msdn.microsoft.com/en-us/netframework/aa569263.aspx">Microsoft .NET Framework version 4 (full framework or client profile)</a></li>
+                    </ul>
+                    <p></p>
+                </div> 
+				<hr />
+                                                
+                <h3>Download the latest version</h3>
+                <div>
+                    <p>
+                        The latest version  of the ACP Log Analyzer app can be downloaded from here: <a href="_files/ACPLogAnalyzerSetup.msi">ACPLogAnalyzerSetup.msi</a>.
+                    </p>
+                    <p>
+                    	Note that if you already have version 1.2 or higher installed, the application can automatically check for updates and install them if required.
+                    </p> 
+                </div> 
+				<hr />
+                                             
+                <h3>Release Notes</h3>
+				<div>
+					<p><strong>Version 1.32 (01 January 2013)</strong></p>
+					<ul>
+						<li>
+							<strong>Support for All-Sky plate solves (new in ACP 7)</strong><br />
+							Added support for the new all-sky plate solve feature added in ACP 7. <br />
+							New reporting and graphing features introduced as follows:<p></p>
+							<ul>
+								<li>Report on overall count of successful all-sky plate solves</li>
+								<li>Report on overall count of unsuccessful all-sky plate solves</li>
+								<li>Report on per-target count of successful all-sky plate solves</li>
+								<li>Report on per-target count of unsuccessful all-sky plate solves</li>
+								<li>Plot of all-sky plate solve times for the current log</li>                
+								<li>Plot of average times for successful all-sky plate solves for all logs</li>              
+							</ul>
+							<p></p>
+							Adjusted log parsing logic so that:<p></p>
+							<ul>
+								<li>Pointing errors during the all-sky pate solve process are ignored (because they are unrepresentative)</li>
+								<li>Pointing errors immediately following a successful all-sky pate solve are inlcuded</li>
+							</ul>
+							<p></p>
+							Application preference settings to include/exclude the new reporting options have been added to the Configure Report window 
+						</li>
+						<p></p>
+			 
+						<li>
+							<strong>Moved source to Visual Studio 2012</strong><br />
+							This has no impact on application features 
+						</li>
+						<p></p>
+						   
+						<li>
+							<strong>New installer</strong><br />
+							Forced to introduce a new third-party (InstallShield 2012 LE) installer as Visual Studio 2012 no longer provides setup projects
+						</li>
+						<p></p>    
+		
+						<li>
+							<strong>Code clean-up</strong><br />
+							Many changes to clean-up and standardize code (following inspection and code analysis with <a href="http://www.jetbrains.com/resharper">ReSharper</a>). 
+							This has no impact on application features
+						</li>      
+						<p></p>                             	
+		
+						<li>
+							<strong>Bug fix:</strong><br />
+							Fixed a bug where attempting to select a 'non-selectable' graph plot option caused subsequent valid selections not to output a valid graph
+						</li>
+						<p></p>    
+		
+						<li>
+							<strong>Minor changes to Auto-Update logic</strong><br />
+							The auto-update feature now downloads updates to the user's Desktop (previously it was a hard-to-find temporary folder)
+						</li>
+						<p></p>             
+					</ul>
+					<p></p>
+	
+					<p><strong>Version 1.31 (05 April 2012)</strong></p>
+					<ul>
+						<li>
+							<strong>Bug fix:</strong><br />
+							Fixed a bug where clicking the 'Add Single Log' button without having previously selected a path caused the application to stop responding
+						</li>
+						<p></p>
+				   
+						<li>
+							<strong>Bug fix:</strong><br />
+							Fixed a system-wide bug related to the timing of operations which spanned the midnight 'time-flip'. This resulted in the time-span for some operations
+							being assigned a negative value
+						</li>
+						<p></p>   
+		
+					  <li>
+							<strong>Bug fix:</strong><br />
+						  Fixed a bug where the text report was showing  total imaging time, rather than the individual imaging target totals
+					  </li>
+						<p></p>  
+		
+					  <li>
+							<strong>Deployment server change</strong><br />
+						  Made changes to reflect the fact that the application is now served from http://www.rarcher.net
+					  </li> 
+						<p></p>                                          	
+					</ul>
+					<p></p>
+	
+					<p><strong>Version 1.30 (13 February 2012)</strong></p>
+					<ul>
+						<li>
+							<strong>Bug fix:</strong><br />
+							Fixed an issue where some measurements (e.g. guider settle time) that happen instantly (take zero seconds to complete) were
+							not being recorded for either text reports or graphs. Such measurements are now being correctly reported and graphed
+						</li>
+						<p></p>
+										
+					</ul>
+					<p></p>
+
+					<p><strong>Version 1.29 (07 December 2011)</strong></p>
+					<ul>
+						<li>
+							<strong>Bug fix:</strong><br />
+							Fixed minor issue with <em>Slew (to target) time</em>. We now ignore rare instances where the slew starts but
+							ACP doesn't report the slew end time. These instances are detected by looking for pointing updates, re-slews to targets
+							or starting slews to other targets
+						</li>
+						<p></p>
+		
+						<li>
+							<strong>Internal code refactoring:</strong>
+							<ul>
+								<li>Split the Log class into a partial class, spread over two files (the log parsing methods were split out)</li>
+								<li>Split the ParseLog() method so that each log event's processing was refactored into distinct methods (was in one large method)</li>
+								<li>Reworked all the average, sum, etc. type methods/getters to use the built-in .NET Average, Sum, etc. extension methods</li>
+								<li>Refactored enumerations of properties where possible with LINQ expressions</li>
+								<li>Refactored log properties to use on-demand calculated values (previously used cached private members exposed by getters)</li>
+								<li>Refactored report, again by using LINQ to query log data and eliminate duplicated data</li>
+								<li>Numerous other changes to clean, simplify and improve code quality</li>
+							</ul>
+						</li>
+						<p></p>
+										
+					</ul>
+					<p></p>
+	
+					<p><strong>Version 1.28 (23 November 2011)</strong></p>
+					<ul>
+						<li>
+							<strong>Clicking on a graph data-point now scrolls the log</strong><br />
+							Clicking on any data-point (except the average line) scrolls the log contents window to highlight
+							the relevant event in the log. This only works for "currently selected log" graphs
+						</li>
+						<p></p>
+										
+					</ul>
+					<p></p>
+	
+					<p><strong>Version 1.27 (22 November 2011)</strong></p>
+					<ul>
+						<li>
+							<strong>FWHM v HFD graphs now have two independent axes</strong><br />
+							FWHM v HFD comparision graphs now show the two data sets on independent (overlaid) axes. This means that both FWHM and HFD
+							data points now show the correct dates/times
+						</li>
+						<p></p>
+		
+						<li>
+							<strong>Graph export feature updated to support tertiary data series</strong><br />
+							Updated graph data export feature to export third data series (if present)
+						</li>
+						<p></p>
+		
+						<li><strong>Bug fixes:</strong><br />
+							<ul>
+								<li>Fixed issue where the text report average HFD values were being wrongly calculated</li>
+								<li>Fixed a caching issue with release notes displayed in the Update and Help windows</li>
+							</ul>
+						</li>
+						<p></p>                                 	
+					</ul>
+					<p></p>
+	
+					<p><strong>Version 1.26 (21 November 2011)</strong></p>
+					<ul>
+						<li>
+							<strong>Replaced graph 'show average' checkbox with right-click option</strong><br />
+							Removed the 'show average' checkbox from the graph window and replaced it with a right-click option
+						</li>
+						<p></p>
+		
+						<li>
+							<strong>FWHM measurements now ignore pointing updates</strong><br />
+							FWHM measurements now only include data for successful plate-solves on imaging targets (e.g. pointing update FWHM's are ignored)
+						</li> 
+						<p></p>
+		
+						<li>
+							<strong>Added HFD measurements</strong><br />
+							Added reporting of HFD measurements (as reported by FocusMax) for both the selected log and for all logs. 
+							If an auto-focus run fails, the measurement is disgarded
+						</li> 
+						<p></p>        
+		
+						<li>
+							<strong>Added graphs for HFD values</strong><br />
+							Added two new graphs to show HFD values for the selected log, and average HFD values for all logs
+						</li> 
+						<p></p>        
+				
+						<li>
+							<strong>Added graphs for FWHM v HFD</strong><br />
+							Added two new graphs to compare FWHM and HFD. Note that to facilitate easier comparision, the HFD data is fitted 
+							to the timescale used by the FWHM data (i.e. the HFD datapoints are not shown at their 'correct' times)
+						</li> 
+						<p></p>
+						
+						<li>
+							<strong>Added graphs for auto-focus times</strong><br />
+							Added two new graphs to show auto-focus times for the selected log, and average auto-focus times for all logs
+						</li> 
+						<p></p>       
+		   
+						<li>
+							<strong>Added configuration tab for third data series</strong><br />
+							Added a new tab to the graph configuration window to allow properties to be set for the tertiary data series (currently only
+							used when comparing FWHM and HFD)
+						</li> 
+						<p></p>              
+					</ul>
+					<p></p>
+
+					<p><strong>Version 1.25 (18 November 2011)</strong></p>
+					<ul>
+						<li>
+							<strong>Export Data to Excel and CSV</strong><br />
+							Right-clicking on a graph allows you to export the data to either Excel (opens Excel) or CSV format
+						</li>
+						<p></p>
+		
+						<li>
+							<strong>Integrated Release Notes</strong><br />
+							Release notes are now stored in a single web-based location. The data is accessed by the ACP Log Analyzer <em>Update</em>
+							and <em>Help</em> windows
+						</li> 
+					</ul>
+					<p></p> 
+								
+					<p><strong>Version 1.24 (17 November 2011)</strong></p>
+					<ul>
+						<li><strong>
+							Graph configuration</strong><br />
+							Added a new configuration window that allows the user to set various graph properties, such as
+						font and font properties (weight, style, color, etc.), graph colors, data line colors, etc. </li>
+						<p></p>
+		
+						<li><strong>Average data line available on all graphs</strong><br />
+							Every graph can show the average for the plotted data series. The line can be turned on/off by a checkbox on the graph window 
+						</li>                                     	
+					</ul>
+					<p></p>
+									 
+					<p><strong>Version 1.23 (11 November 2011)</strong></p>
+					<ul>
+						<li><strong>Bug fix</strong><br />
+						Fixed issue where log events were sometimes duplicated</li>                                     	
+					</ul>
+					<p></p>
+											
+					<p><strong>Version 1.22 (11 November 2011)</strong></p>
+					<ul>
+						<li><strong>Object and center slew</strong><br />
+						Refinements to object and center slew pointing error measurements</li><p></p>
+						<li><strong>Auto-focus measure</strong><br />
+						Refinement to auto-focus time measurements</li><p></p>   
+						<li><strong>Animations</strong><br />
+						Removed the annoying first-run animations</li><p></p>
+						<li><strong>Layout changes</strong><br />
+						Cosmetic changes to main window layout</li>    <p></p>                                  	
+					</ul>
+					<p></p>
+	
+					<p><strong>Version 1.21 (09 November 2011)</strong></p>
+					<ul>
+						<li><strong>Bug fix</strong>: Graph plots would fail if no selection was made, then an overall (no graph selection needed) graph type was selected for plot (fixed)</li><p></p>
+						<li><strong>Versioning</strong><br />
+						Change to version numbering scheme. Now use the format n.nn (from n.n)</li><p></p>
+						<li><strong>Layout changes</strong><br />
+						Minor cosmetic layout changes</li><p></p>                  	
+					</ul>
+					<p></p>
+	
+					<p><strong>Version 1.2 (08 November 2011)</strong></p>
+					<ul>
+						<li>
+							<strong>Auto-Update</strong><br />
+							Added the ability for the application to automatically check for updates and then optionally download and apply them
+						</li>
+						<p></p>
+		
+						<li>
+							<strong>Graph bug fix</strong><br />
+							Fixed bug where the Average Pointing Error (center slew) and Average Pointing Error (object slew) graphs were using the same graph definition
+						</li>
+						<p></p>
+		
+						<li>
+							<strong>Parsing engine updates</strong><br />
+							Major improvements to the way the following events are parsed (this follows a review by Jim McMillan (thank you!) of all the 
+							rules used by the log parser):
+							<p></p>
+							<ul>
+								<li>Pointing error (object slew)</li>
+								<li>Pointing error (center slew)</li>
+								<li>Autoguider failure</li>
+								<li>Auto-focus time</li>
+								<li>Filter change time</li>
+								<li>Autoguider failure (unguided imaging)</li>
+							</ul>
+						</li>
+						<p></p>
+		
+						<li>
+							<strong>Other changes:</strong>
+							<ul>
+								<li>Analyzer remembers the last directory used when opening logs</li>
+								<li>Renamed 'Guider Failure' feature to 'Guider Failure/Unguided Imaging'</li>
+								<li>Bug: Average Pointing Error (center slew) and Average Pointing Error (object slew) were using the same graph def (fixed)</li>
+								<li>Graphs are now plotted on a background thread, improving responsiveness of the UI during lengthy processing</li>
+								<li>The user can now minimize the main window</li>
+								<li>Bug: Unsuccessful AF count was not working correctly (fixed)</li>
+							</ul>
+						</li>
+					</ul>
+	
+					<p></p>                
+					<p><strong>Version 1.1 (03 November 2011)</strong></p>
+					<ul>
+						<li>
+							<strong>Graphs of key observing events</strong><br />
+							Added graphs that allow you to plot 16 types of key observing events like FWHM, pointing errors, slew times, etc.
+						</li>
+						<p></p>
+							
+						<li>
+							<strong>Minor bug fixes and improvements</strong><br />
+							See the <a href="http://acploganalyzer.codeplex.com/">ACP Log Analyzer CodePlex source management</a> site for full details
+						</li>
+					</ul>
+					<p></p>               
+	
+					<p><strong>Version 1.0 (28 October 2011)</strong></p>
+					<ul>
+						<li>
+							<strong>Initial release</strong>
+						</li>
+						<p></p>
+					</ul>
+					<p></p>                       
+				</div> 
+   			</div>	  
+		</div>
+	</div>
+	
+	<br class='clearfloat' />
+
+	<div class='footer'></div>
+</div>
+</body>
+</html>
+
