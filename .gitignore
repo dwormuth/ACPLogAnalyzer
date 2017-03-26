@@ -1,0 +1,68 @@
+ACPLogAnalyzer.exe.config.deploy
+ACPLogAnalyzer_TemporaryKey.pfx
+ACPLogAnalyzer.application
+ACPLogAnalyzer_MarkupCompile.i.cache
+ACPLogAnalyzer_MarkupCompile.lref
+App.g.i.cs
+ConfigPlot.g.cs
+ConfigPlot.g.i.cs
+ConfigReport.g.cs
+ConfigReport.g.i.cs
+DesignTimeResolveAssemblyReferencesInput.cache
+GeneratedInternalTypeHelper.g.cs
+GeneratedInternalTypeHelper.g.i.cs
+Graph.g.cs
+Graph.g.i.cs
+GraphUserControl.g.cs
+GraphUserControl.g.i.cs
+Help.g.cs
+Help.g.i.cs
+MainWindow.g.cs
+MainWindow.g.i.cs
+Update.g.cs
+ACPLogAnalyzer.csprojResolveAssemblyReference.cache
+App.g.cs
+Update.g.i.cs
+ACPLogAnalyzer.exe
+ACPLogAnalyzer.exe.manifest
+ACPLogAnalyzer.pdb
+ACPLogAnalyzer_MarkupCompile.cache
+ACPLogAnalyzer.csproj.FileListAbsolute.txt
+ACPLogAnalyzer.csproj.GenerateResource.Cache
+ACPLogAnalyzer_MarkupCompile.i.lref
+ACPLogAnalyzer.csproj.GenerateResource.Cache
+/ACPLogAnalyzer/bin/Debug/ACPLogAnalyzer.exe
+/ACPLogAnalyzer/bin/Debug/ACPLogAnalyzer.exe.manifest
+/ACPLogAnalyzer/bin/Debug/ACPLogAnalyzer.pdb
+/ACPLogAnalyzer/bin/Debug/app.publish/ACPLogAnalyzer.application
+/ACPLogAnalyzer/bin/Debug/app.publish/Application Files/ACPLogAnalyzer_1_0_0_0/ACPLogAnalyzer.exe.deploy
+/ACPLogAnalyzer/bin/Debug/app.publish/Application Files/ACPLogAnalyzer_1_0_0_0/ACPLogAnalyzer.exe.manifest
+/ACPLogAnalyzer/bin/Debug/app.publish/Application Files/ACPLogAnalyzer_1_0_0_0/ACPLogAnalyzerIcons.ico.deploy
+/ACPLogAnalyzer/bin/Debug/app.publish/Application Files/ACPLogAnalyzer_1_0_0_0/System.Windows.Controls.DataVisualization.Toolkit.VisualStudio.Design.dll.deploy
+/ACPLogAnalyzer/bin/Debug/app.publish/Application Files/ACPLogAnalyzer_1_0_0_0/System.Windows.Controls.DataVisualization.Toolkit.dll.deploy
+/ACPLogAnalyzer/bin/Debug/app.publish/Application Files/ACPLogAnalyzer_1_0_0_0/WPFToolkit.dll.deploy
+/ACPLogAnalyzer/bin/Release/ACPLogAnalyzer.application
+/ACPLogAnalyzer/bin/Release/ACPLogAnalyzer.exe
+/ACPLogAnalyzer/bin/Release/ACPLogAnalyzer.exe.CodeAnalysisLog.xml
+/ACPLogAnalyzer/bin/Release/ACPLogAnalyzer.exe.lastcodeanalysissucceeded
+/ACPLogAnalyzer/bin/Release/ACPLogAnalyzer.exe.manifest
+/ACPLogAnalyzer/bin/Release/ACPLogAnalyzer.pdb
+/ACPLogAnalyzer/obj/x86/Debug/App.g.i.cs
+/ACPLogAnalyzer/obj/x86/Debug/ConfigReport.g.cs
+/ACPLogAnalyzer/obj/x86/Debug/GeneratedInternalTypeHelper.g.cs
+/ACPLogAnalyzer/obj/x86/Debug/Graph.g.i.cs
+/ACPLogAnalyzer/obj/x86/Debug/ConfigReport.g.i.cs
+/ACPLogAnalyzer/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/ACPLogAnalyzer/obj/x86/Debug/GeneratedInternalTypeHelper.g.i.cs
+/ACPLogAnalyzer/obj/x86/Debug/Graph.g.cs
+/ACPLogAnalyzer/obj/x86/Debug/GraphUserControl.g.cs
+/ACPLogAnalyzer/obj/x86/Debug/GraphUserControl.g.i.cs
+/ACPLogAnalyzer/obj/x86/Debug/Help.g.cs
+/ACPLogAnalyzer/obj/x86/Debug/Help.g.i.cs
+/ACPLogAnalyzer/obj/x86/Debug/MainWindow.g.cs
+/ACPLogAnalyzer/obj/x86/Debug/MainWindow.g.i.cs
+/ACPLogAnalyzer/obj/x86/Debug/Update.g.cs
+/ACPLogAnalyzer/obj/x86/Debug/Update.g.i.cs
+/ACPLogAnalyzer/obj/x86/Release/ACPLogAnalyzer.application
+/ACPLogAnalyzer/obj/x86/Release/ACPLogAnalyzer.csproj.FileListAbsolute.txt
+*.zip
