@@ -66,3 +66,7 @@ ACPLogAnalyzer.csproj.GenerateResource.Cache
 /ACPLogAnalyzer/obj/x86/Release/ACPLogAnalyzer.application
 /ACPLogAnalyzer/obj/x86/Release/ACPLogAnalyzer.csproj.FileListAbsolute.txt
 *.zip
+/ACPLogAnalyzer/obj/x86/Debug/ACPLogAnalyzer.g.resources
+/ACPLogAnalyzer/obj/x86/Debug/App.baml
+/ACPLogAnalyzer/obj/x86/Debug/ConfigPlot.baml
+/ACPLogAnalyzer/obj/x86/Debug/Graph.baml

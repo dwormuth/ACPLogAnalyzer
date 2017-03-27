@@ -5,9 +5,9 @@ using System.Windows;
 [assembly: AssemblyTitle("ACPLogAnalyzer")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Russell Archer")]
+[assembly: AssemblyCompany("Russell Archer / David Wormuth")]
 [assembly: AssemblyProduct("ACP Log Analyzer")]
-[assembly: AssemblyCopyright("Copyright © Russell Acher 2011, 2012, 2013")]
+[assembly: AssemblyCopyright("Copyright © Russell Acher 2011, 2012, 2013, David Wormuth 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -25,5 +25,5 @@ using System.Windows;
 //      Build Number
 //      Revision
 
-[assembly: AssemblyVersion("1.3.2")]
-[assembly: AssemblyFileVersion("1.3.2.0")]
+[assembly: AssemblyVersion("1.3.3")]
+[assembly: AssemblyFileVersion("1.3.3.0")]
