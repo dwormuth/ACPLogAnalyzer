@@ -71,3 +71,9 @@ ACPLogAnalyzer.csproj.GenerateResource.Cache
 /ACPLogAnalyzer/obj/x86/Debug/ConfigPlot.baml
 /ACPLogAnalyzer/obj/x86/Debug/Graph.baml
 /ACPLogAnalyzer/bin/Debug/ACPLogAnalyzer.exe.config
+/.vs/config/applicationhost.config
+/ACPLogAnalyzer/bin/Release/ACPLogAnalyzer.exe.config
+/ACPLogAnalyzer/obj/x86/Release/ACPLogAnalyzer.g.resources
+/ACPLogAnalyzer/obj/x86/Release/App.baml
+/ACPLogAnalyzer/obj/x86/Release/ConfigPlot.baml
+/ACPLogAnalyzer/obj/x86/Release/Graph.baml
