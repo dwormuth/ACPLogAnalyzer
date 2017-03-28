@@ -77,3 +77,9 @@ ACPLogAnalyzer.csproj.GenerateResource.Cache
 /ACPLogAnalyzer/obj/x86/Release/App.baml
 /ACPLogAnalyzer/obj/x86/Release/ConfigPlot.baml
 /ACPLogAnalyzer/obj/x86/Release/Graph.baml
+/ACPLogAnalyzer/obj/x86/Release/DesignTimeResolveAssemblyReferences.cache
+/ACPLogAnalyzer/bin/Release/app.publish/Application Files/ACPLogAnalyzer_1_0_0_1/ACPLogAnalyzer.exe.deploy
+/ACPLogAnalyzer/bin/Release/app.publish/Application Files/ACPLogAnalyzer_1_0_0_1/ACPLogAnalyzerIcons.ico.deploy
+/ACPLogAnalyzer/bin/Release/app.publish/Application Files/ACPLogAnalyzer_1_0_0_1/System.Windows.Controls.DataVisualization.Toolkit.VisualStudio.Design.dll.deploy
+/ACPLogAnalyzer/bin/Release/app.publish/Application Files/ACPLogAnalyzer_1_0_0_1/System.Windows.Controls.DataVisualization.Toolkit.dll.deploy
+/ACPLogAnalyzer/bin/Release/app.publish/Application Files/ACPLogAnalyzer_1_0_0_1/WPFToolkit.dll.deploy

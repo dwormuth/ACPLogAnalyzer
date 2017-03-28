@@ -8,7 +8,7 @@
             <RowDefinition Height="607*" />
         </Grid.RowDefinitions>
         <Label Content="ACP Log Analyzer" Height="33" HorizontalAlignment="Left" Margin="12,0,0,0" Name="Label1" VerticalAlignment="Top" Width="691" HorizontalContentAlignment="Center" FontSize="16" FontStyle="Normal" FontWeight="Bold" />
-        <Label Content="Copyright Russell Archer, 2011, 2012, 2013" Height="28" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="12,57,0,0" Name="Label2" VerticalAlignment="Top" Width="691" />
+        <Label Content="Copyright Russell Archer, 2011, 2012, 2013, David Wormuth 2017" Height="28" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="12,57,0,0" Name="Label2" VerticalAlignment="Top" Width="691" />
         <TextBlock Height="24" HorizontalAlignment="Left" Margin="140,87,0,0" Name="TextBlock1" Text="This application may be freely used and distributed by the ACP community" VerticalAlignment="Top" Width="430" TextAlignment="Center" TextWrapping="Wrap" Grid.RowSpan="2" />
         <TextBlock Height="23" HorizontalAlignment="Left" Name="TextBlock3" Text="With grateful thanks to ACP and astro-imaging wizard Jim McMillan, for all his help, encouragment, suggestions and feedback." TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="691" FontStyle="Italic" Margin="12,12,0,0" Grid.Row="1" />
         <TextBlock FontStyle="Normal" Height="24" HorizontalAlignment="Left" Margin="12,80,0,0" Name="TextBlock4" Text="This application is not a DC-3 Dreams product, nor is it in any way endorsed, recommended or supported by them. " TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="691" Grid.Row="1" />

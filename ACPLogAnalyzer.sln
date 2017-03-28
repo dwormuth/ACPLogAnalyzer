@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26228.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACPLogAnalyzer", "ACPLogAnalyzer\ACPLogAnalyzer.csproj", "{C743A4A1-B358-4302-83B3-A317D1EB923F}"
 EndProject
@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		ACPLogAnalyzer\Images\ACPLogAnalyzerIcons.ico = ACPLogAnalyzer\Images\ACPLogAnalyzerIcons.ico
 	EndProjectSection
-EndProject
-Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "Setup", "Setup\Setup.isproj", "{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,35 +54,6 @@ Global
 		{C743A4A1-B358-4302-83B3-A317D1EB923F}.SingleImage|Mixed Platforms.Build.0 = Release|x86
 		{C743A4A1-B358-4302-83B3-A317D1EB923F}.SingleImage|x86.ActiveCfg = Release|x86
 		{C743A4A1-B358-4302-83B3-A317D1EB923F}.SingleImage|x86.Build.0 = Release|x86
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.CD_ROM|Any CPU.ActiveCfg = CD_ROM
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.CD_ROM|Any CPU.Build.0 = CD_ROM
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.CD_ROM|Mixed Platforms.ActiveCfg = CD_ROM
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.CD_ROM|Mixed Platforms.Build.0 = CD_ROM
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.CD_ROM|x86.ActiveCfg = CD_ROM
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.CD_ROM|x86.Build.0 = CD_ROM
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.Debug|Any CPU.ActiveCfg = DVD-5
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.Debug|Any CPU.Build.0 = DVD-5
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.Debug|Mixed Platforms.ActiveCfg = DVD-5
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.Debug|x86.ActiveCfg = DVD-5
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.Debug|x86.Build.0 = DVD-5
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.DVD-5|Any CPU.ActiveCfg = DVD-5
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.DVD-5|Any CPU.Build.0 = DVD-5
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.DVD-5|Mixed Platforms.ActiveCfg = DVD-5
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.DVD-5|Mixed Platforms.Build.0 = DVD-5
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.DVD-5|x86.ActiveCfg = DVD-5
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.DVD-5|x86.Build.0 = DVD-5
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.Release|Any CPU.ActiveCfg = SingleImage
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.Release|Any CPU.Build.0 = SingleImage
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.Release|Mixed Platforms.ActiveCfg = SingleImage
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.Release|Mixed Platforms.Build.0 = SingleImage
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.Release|x86.ActiveCfg = SingleImage
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.Release|x86.Build.0 = SingleImage
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.SingleImage|Any CPU.ActiveCfg = SingleImage
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.SingleImage|Any CPU.Build.0 = SingleImage
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.SingleImage|Mixed Platforms.ActiveCfg = SingleImage
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.SingleImage|Mixed Platforms.Build.0 = SingleImage
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.SingleImage|x86.ActiveCfg = SingleImage
-		{41BA56E4-F91A-4EBC-BBB5-5FA09463EC12}.SingleImage|x86.Build.0 = SingleImage
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

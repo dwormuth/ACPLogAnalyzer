@@ -12,7 +12,7 @@ namespace ACPLogAnalyzer
         /// <summary>
         /// The physical path to the log file
         /// </summary>
-        public string Path { get; private set; }
+        public string Path { get; }
 
         /// <summary>
         /// The current target when parsing
