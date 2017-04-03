@@ -83,3 +83,7 @@ ACPLogAnalyzer.csproj.GenerateResource.Cache
 /ACPLogAnalyzer/bin/Release/app.publish/Application Files/ACPLogAnalyzer_1_0_0_1/System.Windows.Controls.DataVisualization.Toolkit.VisualStudio.Design.dll.deploy
 /ACPLogAnalyzer/bin/Release/app.publish/Application Files/ACPLogAnalyzer_1_0_0_1/System.Windows.Controls.DataVisualization.Toolkit.dll.deploy
 /ACPLogAnalyzer/bin/Release/app.publish/Application Files/ACPLogAnalyzer_1_0_0_1/WPFToolkit.dll.deploy
+/.vs/VSWorkspaceState.json
+/.vs/slnx.sqlite
+/Help/_files/ACPLogAnalyzerSetup133.msi
+/Setup2017/Setup2017.vdproj
