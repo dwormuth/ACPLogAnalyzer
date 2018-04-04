@@ -38,6 +38,7 @@ namespace ACPLogAnalyzer
                     ParsePointingError();                          // Pointing error (object slew) (intentional fall-through)
                 if (ParseEndOfLog())                    break;     // End of log
                 if (ParseComment())                     continue;  // Comment line
+                if (ParseRepeat())                      continue;  // Starting target repeat line
                 if (ParseLogPreamble())                 continue;  // Start of log preamble
                 if (ParseImagingTargetStart())          continue;  // Start of new imaging target
                 if (ParseImagingExposure())             continue;  // New imaging exposure
@@ -71,6 +72,17 @@ namespace ACPLogAnalyzer
         public bool ParseComment()
         {
             return LineLower.Trim()[0].CompareTo('#') == 0;
+        }
+
+        /// <summary>
+        /// Parse Starting Target repeat
+        /// </summary>
+        /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
+        public bool ParseRepeat()
+        {
+            //if (LineLower.IndexOf("starting target repeat", System.StringComparison.Ordinal) != -1)
+            return (LineLower.IndexOf("starting target repeat", System.StringComparison.Ordinal) != -1);
+             //       LineLower.Trim()[0].CompareTo('#') == 0;
         }
 
         /// <summary>
