@@ -10,17 +10,33 @@ namespace ACPLogAnalyzer.UnitTests
     public class ACPLogAnalyzerTests
     {
         [TestMethod]
-        public void ParseRepeat_CorrectString_True()
+        public void ParseRepeat_InCorrectString_False()
         {
-            static string mytest = "starting target reepeat";
-            static List<string> testString = new List<string>(mytest);
+            //string mytest = "starting target reepeat";
+            List<string> testString = new List<string>(new string[] {"starting target reepeat", "line1", "Line2"});
 
             Log log = new Log("foo", testString);
 
-            //LineLower = "starting target reepeat";
-            Assert.IsTrue(ACPLogAnalyzer.Log.ParseRepeat());
-            //Assert.IsTrue(true);
+            //log.LineLower = "starting target reepeat";
+            log.LineLower = testString[0];
 
+            Assert.IsFalse(log.ParseRepeat());
+            //Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void ParseRepeat_CorrectString_True()
+        {
+            //string mytest = "starting target reepeat";
+            List<string> testString = new List<string>(new string[] { "starting target repeat", "line1", "Line2" });
+
+            Log log = new Log("foo", testString);
+
+            //log.LineLower = "starting target reepeat";
+            log.LineLower = testString[0];
+
+            Assert.IsTrue(log.ParseRepeat());
+            //Assert.IsTrue(true);
         }
     }
 }
