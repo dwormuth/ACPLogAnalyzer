@@ -51,7 +51,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Help_Text_Url" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://www.rarcher.net/acpLogAnalyzerHelp.html</Value>
+      <Value Profile="(Default)">http://acploganalyzer.org/acpLogAnalyzerHelp.html</Value>
     </Setting>
     <Setting Name="Average_Pointing_Error_Center" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -153,7 +153,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Help_Text_Config_Url" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://www.rarcher.net/acpLogAnalyzerHelp.html?panel=config</Value>
+      <Value Profile="(Default)">http://acploganalyzer.org/acpLogAnalyzerHelp.html?panel=config</Value>
     </Setting>
     <Setting Name="Show_Total_Guiding_Failures_Breakdown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -162,7 +162,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Version_Check_Url" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://www.rarcher.net/_files/ACPLogAnalyzer.txt</Value>
+      <Value Profile="(Default)">http://acploganalyzer.org/_files/ACPLogAnalyzer.txt</Value>
     </Setting>
     <Setting Name="Always_Check_For_Updates" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -231,7 +231,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Release_Notes_Url" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://www.rarcher.net/_files/logAnalyzerRelNotes.html</Value>
+      <Value Profile="(Default)">http://acploganalyzer.org/_files/logAnalyzerRelNotes.html</Value>
     </Setting>
     <Setting Name="Average_HFD" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -249,7 +249,7 @@
       <Value Profile="(Default)">1.5</Value>
     </Setting>
     <Setting Name="Update_Download_Url" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://www.rarcher.net/_files/ACPLogAnalyzerSetup.msi</Value>
+      <Value Profile="(Default)">http://acploganalyzer.org/_files/ACPLogAnalyzerSetup.exe</Value>
     </Setting>
     <Setting Name="Show_AllSky_Success_Count" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
