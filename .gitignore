@@ -392,3 +392,4 @@ ASALocalRun/
 *.nvuser
 README.sublime-workspace
 *.dll
+.DS_Store
