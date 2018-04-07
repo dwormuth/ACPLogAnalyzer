@@ -1,0 +1,28 @@
+ ==================================
+ = Build Notes for ACPLogAnalyzer =
+ ==================================
+
+3/25/18 
+
+Need to add changes for V8
+Namely that some targets start an observation with text: ACPS Observation M97(1 of 1)
+
+TODO: Custom image file path/names are in use -- can we read the file and help with better parsing?
+
+4/5/18 
+
+Using Inno Installer on recommendation from Bob Denny
+Ready to release version 1.36
+
+Following files need to be included:
+ACP...exe
+ACP...exe.config
+ACP...exe.manifest
+System.Windows.Controls.DataVisualization.Toolkit.dll
+System.Windows.Controls.DataVisualization.Toolkit.VisualStudio.Design.dll
+
+4/6/18 
+
+Used ForkLift to attach to S3,
+
+moved HTML files over, edited and moved back. Going Live with 1.36
