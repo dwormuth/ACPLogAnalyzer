@@ -438,9 +438,10 @@ namespace ACPLogAnalyzer
 
         private void ButtonConfigPlotClick(object sender, RoutedEventArgs e)
         {
-            var cfgWnd = new ConfigPlot();
-            cfgWnd.RestartConfig = _configRestart;
-            cfgWnd.RestartTab = _configRestartTab;
+            var cfgWnd = new ConfigPlot {
+                RestartConfig = _configRestart,
+                RestartTab = _configRestartTab
+            };
             cfgWnd.ShowDialog();
             if (cfgWnd.RestartConfig)
             {
@@ -1173,6 +1174,11 @@ namespace ACPLogAnalyzer
             // Now create the (series 2) datapoints...
             foreach (var kvp in _grDataSeries1)
                 _grDataSeries2.Add(new KeyValuePair<object, object>(kvp.Key, tmpAvg));  // Add the average
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            var cfgWnd = new ConfigParser();
+            cfgWnd.ShowDialog();
         }
     }
 }

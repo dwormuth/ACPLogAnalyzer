@@ -1,161 +1,183 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
-namespace ACPLogAnalyzer
-{
-    public partial class Log
-    {
+namespace ACPLogAnalyzer {
+    public partial class Log {
         /// <summary>
         /// Enumerate the contents of a log and parse various properties, stats, timings, etc.
         /// </summary>
         /// <returns>Returns true if the log parsed OK, false otherwise</returns>
-        public bool ParseLog()
-        {
-            CurrentTarget = null;
-            Targets = new List<Target>();
-            IsAcpLog = false;     
-            
+        public bool ParseLog() {
+            this.CurrentTarget = null;
+            this.Targets = new List<Target>();
+            this.IsAcpLog = false;
+
             // Is this an ACP log?
-            if (!ParseValidAcpLog())
-            {
-                InitVars();
+            if (!this.ParseValidAcpLog()) {
+                this.InitVars();
                 return false;  // Can't parse, it's not an ACP log
             }
 
             // Start parsing the log until we reach the EOF or the ending statement
-            LogLineIndex = -1;
-            foreach (var line in this.LogFileText)
-            {
-                LogLineIndex++;
-                if (string.IsNullOrEmpty(line)) continue;
-                
-                LineLower = line.ToLower();
+            this.LogLineIndex = -1;
+            foreach (var line in this.LogFileText) {
+                this.LogLineIndex++;
+                if (string.IsNullOrEmpty(line))
+                    continue;
 
-                    ParseAutoFocusTime();                          // Auto-focus time (intentional fall-through)
-                    ParseAutoFocusCount();                         // Auto-focus count (intentional fall-through)
-                    ParseFwhm();                                   // FWHM value (intentional fall-through)
-                    ParsePointingError();                          // Pointing error (object slew) (intentional fall-through)
-                if (ParseEndOfLog())                    break;     // End of log
-                if (ParseComment())                     continue;  // Comment line
-                if (ParseRepeat())                      continue;  // Starting target repeat line
-                if (ParseLogPreamble())                 continue;  // Start of log preamble
-                if (ParseImagingTargetStart())          continue;  // Start of new imaging target
-                if (ParseImagingExposure())             continue;  // New imaging exposure
-                if (ParseFwhm())                        continue;  // FWHM value
-                if (ParseSlewToTargetTime())            continue;  // Slew to target time
-                if (ParsePointingErrorCenterSlew())     continue;  // Pointing error (center slew)
-                if (ParsePlateSolveCount())             continue;  // Plate solve count
-                if (ParsePlateSolveErrorCount())        continue;  // Plate solve error count
-                if (ParseAllSkyPlateSolveCount())       continue;  // All-sky plate solve count
-                if (ParseAllSkyPlateSolveErrorCount())  continue;  // All-sky plate solve error count
-                if (ParseHfd())                         continue;  // HFD value
-                if (ParseAutoFocusErrorCount())         continue;  // Auto-focus error count
-                if (ParseScriptError())                 continue;  // Script error count
-                if (ParseScriptAbort())                 continue;  // Script abort count
-                if (ParseGuiderStartUpTime())           continue;  // Guider start-up time
-                if (ParseGuiderSettleTime())            continue;  // Guider settle time
-                if (ParseFilterChangeTime())            continue;  // Filter change time
-                if (ParseWaitTime())                    continue;  // Wait time
-                if (ParsePointingExpPlateSolveTime())   continue;  // Pointing exposure/plate solve time
-                if (ParseAllSkyPlateSolveTime())        continue;  // All-sky plate solve time
-                if (ParseGuiderFailure())               continue;  // Guider failure (with carry on) count
+                this.LineLower = line.ToLower();
+
+                this.ParseAutoFocusTime();                          // Auto-focus time (intentional fall-through)
+                this.ParseAutoFocusCount();                         // Auto-focus count (intentional fall-through)
+                this.ParseFwhm();                                   // FWHM value (intentional fall-through)
+                this.ParsePointingError();                          // Pointing error (object slew) (intentional fall-through)
+                if (this.ParseEndOfLog())
+                    break;     // End of log
+                if (this.ParseComment())
+                    continue;  // Comment line
+                if (this.ParseRepeat())
+                    continue;  // Starting target repeat line
+                if (this.ParseLogPreamble())
+                    continue;  // Start of log preamble
+                if (this.ParseImagingTargetStart())
+                    continue;  // Start of new imaging target
+                if (this.ParseImagingExposure())
+                    continue;  // New imaging exposure
+                if (this.ParseFwhm())
+                    continue;  // FWHM value
+                if (this.ParseSlewToTargetTime())
+                    continue;  // Slew to target time
+                if (this.ParsePointingErrorCenterSlew())
+                    continue;  // Pointing error (center slew)
+                if (this.ParsePlateSolveCount())
+                    continue;  // Plate solve count
+                if (this.ParsePlateSolveErrorCount())
+                    continue;  // Plate solve error count
+                if (this.ParseAllSkyPlateSolveCount())
+                    continue;  // All-sky plate solve count
+                if (this.ParseAllSkyPlateSolveErrorCount())
+                    continue;  // All-sky plate solve error count
+                if (this.ParseHfd())
+                    continue;  // HFD value
+                if (this.ParseAutoFocusErrorCount())
+                    continue;  // Auto-focus error count
+                if (this.ParseScriptError())
+                    continue;  // Script error count
+                if (this.ParseScriptAbort())
+                    continue;  // Script abort count
+                if (this.ParseGuiderStartUpTime())
+                    continue;  // Guider start-up time
+                if (this.ParseGuiderSettleTime())
+                    continue;  // Guider settle time
+                if (this.ParseFilterChangeTime())
+                    continue;  // Filter change time
+                if (this.ParseWaitTime())
+                    continue;  // Wait time
+                if (this.ParsePointingExpPlateSolveTime())
+                    continue;  // Pointing exposure/plate solve time
+                if (this.ParseAllSkyPlateSolveTime())
+                    continue;  // All-sky plate solve time
+                if (this.ParseGuiderFailure())
+                    continue;  // Guider failure (with carry on) count
             }
 
-            return IsAcpLog;
+            return this.IsAcpLog;
         }
 
         /// <summary>
         /// Parse comment line ("#")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseComment()
-        {
-            return LineLower.Trim()[0].CompareTo('#') == 0;
+        public bool ParseComment() {
+            return this.LineLower.Trim()[0].CompareTo('#') == 0;
         }
 
         /// <summary>
         /// Parse Starting Target repeat
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseRepeat()
-        {
+        public bool ParseRepeat() {
             //if (LineLower.IndexOf("starting target repeat", System.StringComparison.Ordinal) != -1)
-            return (LineLower.IndexOf("starting target repeat", System.StringComparison.Ordinal) != -1);
-             //       LineLower.Trim()[0].CompareTo('#') == 0;
+            return (this.LineLower.IndexOf("starting target repeat", System.StringComparison.Ordinal) != -1);
+            //       LineLower.Trim()[0].CompareTo('#') == 0;
         }
 
         /// <summary>
         /// Parse valid ACP log ("acp console log opened")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseValidAcpLog()
-        {
-            IsAcpLog = false;
-            if (LogFileText == null || LogFileText.Count == 0) return false;
+        public bool ParseValidAcpLog() {
+            this.IsAcpLog = false;
+            if (this.LogFileText == null || this.LogFileText.Count == 0)
+                return false;
 
-            foreach (var line in this.LogFileText)
-            {
+            foreach (var line in this.LogFileText) {
                 var lineLower = line.ToLower();
-                if (string.IsNullOrEmpty(lineLower)) continue;
+                if (string.IsNullOrEmpty(lineLower))
+                    continue;
 
-                if (lineLower.IndexOf("acp console log opened", System.StringComparison.Ordinal) == -1) continue;
-                
-                try
-                {
-                    IsAcpLog = true;
-                    DateTime tmpDate;
-                    if (!DateTime.TryParse(lineLower.Substring(lineLower.IndexOf("opened", System.StringComparison.Ordinal) + "opened".Length + 1, "dd-mmm-yyyy hh:mm:ss".Length), out tmpDate))
+                if (lineLower.IndexOf("acp console log opened", System.StringComparison.Ordinal) == -1)
+                    continue;
+
+                try {
+                    this.IsAcpLog = true;
+                    var dtBeg = lineLower.IndexOf("opened", System.StringComparison.Ordinal) + "opened".Length + 1;
+                    var dtEnd = lineLower.IndexOf(" utc", System.StringComparison.Ordinal);
+                    var dtStr = lineLower.Substring(dtBeg, dtEnd - dtBeg);
+                    CultureInfo culture;
+                    if (Properties.Settings.Default.Parser_Culture.Equals("system")) {
+                        culture = CultureInfo.CurrentCulture;
+                    }
+                    else {
+                        culture = CultureInfo.GetCultureInfo(Properties.Settings.Default.Parser_Culture);
+                    }
+                    if (!DateTime.TryParse(dtStr, culture, DateTimeStyles.None, out DateTime tmpDate))
                         this.StartDate = null;
                     else
                         this.StartDate = tmpDate;
 
                     break;
-                }
-                catch
-                {
+                } catch {
                     this.StartDate = null;
                 }
             }
 
-            return IsAcpLog;
+            return this.IsAcpLog;
         }
 
         /// <summary>
         /// Parse log start\preamble ("acp console log opened", "this is acp version", "licensed to")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseLogPreamble()
-        {
-            if (LogFileText == null || LogFileText.Count == 0) return false;
+        public bool ParseLogPreamble() {
+            if (this.LogFileText == null || this.LogFileText.Count == 0)
+                return false;
 
-            return LineLower.IndexOf("acp console log opened", System.StringComparison.Ordinal) != -1 ||
-                   LineLower.IndexOf("this is acp version", System.StringComparison.Ordinal) != -1 ||
-                   LineLower.IndexOf("licensed to", System.StringComparison.Ordinal) != -1;
+            return this.LineLower.IndexOf("acp console log opened", System.StringComparison.Ordinal) != -1 ||
+                   this.LineLower.IndexOf("this is acp version", System.StringComparison.Ordinal) != -1 ||
+                   this.LineLower.IndexOf("licensed to", System.StringComparison.Ordinal) != -1;
         }
 
         /// <summary> 
         /// Parse end of log ("acp console log closed")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseEndOfLog()
-        {
-            if (LineLower.IndexOf("acp console log closed", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
-                    DateTime tmpDate;
+        public bool ParseEndOfLog() {
+            if (this.LineLower.IndexOf("acp console log closed", System.StringComparison.Ordinal) != -1) {
+                try {
                     if (!DateTime.TryParse(
-                        LineLower.Substring(LineLower.IndexOf("closed", System.StringComparison.Ordinal) + "closed".Length + 1,
-                        "dd-mmm-yyyy hh:mm:ss".Length), out tmpDate))
-                    {
+                        this.LineLower.Substring(this.LineLower.IndexOf("closed", System.StringComparison.Ordinal) + "closed".Length + 1,
+                        "dd-mmm-yyyy hh:mm:ss".Length),
+                        CultureInfo.CurrentCulture,
+                        DateTimeStyles.None,
+                        out DateTime tmpDate)) {
                         this.EndDate = null;
                     }
                     else
                         this.EndDate = tmpDate;
-                }
-                catch
-                {
+                } catch {
                     this.EndDate = null;
                 }
 
@@ -169,34 +191,43 @@ namespace ACPLogAnalyzer
         /// Parse start of new imaging target ("starting target")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseImagingTargetStart()
-        {
-            if (LineLower.IndexOf("starting target", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+        public bool ParseImagingTargetStart() {
+            if (
+                // ACP case
+                this.LineLower.IndexOf("starting target", System.StringComparison.Ordinal) != -1
+                // ACPS case
+                || this.LineLower.IndexOf("acps observation", System.StringComparison.Ordinal) != -1
+                ) {
+                try {
                     // We found a target
-                    var tmpStr = LineLower.Substring(LineLower.IndexOf("target", System.StringComparison.Ordinal) + "target".Length + 1);
-                    tmpStr = tmpStr.Substring(0, tmpStr.IndexOf("=", System.StringComparison.Ordinal));
-                    CurrentTarget = new Target(tmpStr.Trim(), this);
-                    Targets.Add(CurrentTarget);
+                    string tmpStr = null;
+                    // ACP target
+                    if (this.LineLower.IndexOf("target", System.StringComparison.Ordinal) != -1) {
+                        tmpStr = this.LineLower.Substring(this.LineLower.IndexOf("target", System.StringComparison.Ordinal) + "target".Length + 1);
+                        tmpStr = tmpStr.Substring(0, tmpStr.IndexOf("=", System.StringComparison.Ordinal));
+                    }
+                    // ACPS target
+                    if (this.LineLower.IndexOf("observation", System.StringComparison.Ordinal) != -1) {
+                        tmpStr = this.LineLower.Substring(this.LineLower.IndexOf("observation", System.StringComparison.Ordinal) + "observation".Length + 1);
+                        tmpStr = tmpStr.Substring(0, tmpStr.IndexOf("(", System.StringComparison.Ordinal));
+                    }
+                    this.CurrentTarget = new Target(tmpStr.Trim(), this);
+                    this.Targets.Add(this.CurrentTarget);
 
                     // Add a log event for the new target...
-                    var dtOpTime = GetOperationTime(LineLower);
-                    LogEvents.Add(new LogEvent(
+                    var dtOpTime = this.GetOperationTime(this.LineLower);
+                    this.LogEvents.Add(new LogEvent(
                         dtOpTime,
                         dtOpTime,
                         LogEventType.Target,
-                        LogLineIndex,
+                        this.LogLineIndex,
                         true,
-                        CurrentTarget,
-                        CurrentTarget.Name,
-                        Path));
+                        this.CurrentTarget,
+                        this.CurrentTarget.Name,
+                        this.Path));
 
                     return true;
-                }
-                catch
-                {
+                } catch {
                 }
             }
 
@@ -207,24 +238,20 @@ namespace ACPLogAnalyzer
         /// Parse start of new exposure ("imaging to")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseImagingExposure()
-        {
-            if (LineLower.IndexOf("imaging to", System.StringComparison.Ordinal) != -1)
-            {
-                DateTime? dtOpTime;
-                var newExposure = FindExposure(LogLineIndex, -1, out dtOpTime);
-                if (newExposure != null)
-                {
+        public bool ParseImagingExposure() {
+            if (this.LineLower.IndexOf("imaging to", System.StringComparison.Ordinal) != -1) {
+                var newExposure = this.FindExposure(this.LogLineIndex, -1, out DateTime? dtOpTime);
+                if (newExposure != null) {
                     // Add a new exposure event
-                    LogEvents.Add(new LogEvent(
+                    this.LogEvents.Add(new LogEvent(
                         dtOpTime,
                         dtOpTime,
                         LogEventType.Exposure,
-                        LogLineIndex,
+                        this.LogLineIndex,
                         true,
-                        CurrentTarget,
+                        this.CurrentTarget,
                         newExposure,
-                        Path));
+                        this.Path));
 
                     return true;
                 }
@@ -237,44 +264,38 @@ namespace ACPLogAnalyzer
         /// Parse FWHM value ("image fwhm is")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseFwhm()
-        {
-            if (LineLower.IndexOf("image fwhm is", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+        public bool ParseFwhm() {
+            if (this.LineLower.IndexOf("image fwhm is", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Changes re work item #129:
                     // Change FWHM measurements to work only on imaging exposures (i.e. exclude pointing FWHM's)
                     // Rule: Scan back until we encounter "imaging to" (this indicates an imaging FWHM)
                     //       If we find "updating pointing" first, we ignore this FWHM (it's a pointing update FWHM)
                     // Error:If we find end of log OR "image fwhm is" before either of the above, ignore the FWHM
 
-                    if (!IsImagingFwhm(GetPreviousLogLineIndex(LogLineIndex), -1)) return false;  // It was a pointing update FWHM - ignore
+                    if (!this.IsImagingFwhm(this.GetPreviousLogLineIndex(this.LogLineIndex), -1))
+                        return false;  // It was a pointing update FWHM - ignore
 
                     // Get the FWHM...
-                    var tmpStr = LineLower.Substring(LineLower.IndexOf("is", System.StringComparison.Ordinal) + "is".Length + 1);
+                    var tmpStr = this.LineLower.Substring(this.LineLower.IndexOf("is", System.StringComparison.Ordinal) + "is".Length + 1);
                     tmpStr = tmpStr.Substring(0, tmpStr.IndexOf("arcsec", System.StringComparison.Ordinal));
 
-                    double tmpFwhm;
-                    if (double.TryParse(tmpStr, out tmpFwhm))
-                    {
+                    if (double.TryParse(tmpStr, out double tmpFwhm)) {
                         // Add a log event for the FWHM measurement...
-                        var dtStart = GetOperationTime(LineLower);
-                        LogEvents.Add(new LogEvent(
+                        var dtStart = this.GetOperationTime(this.LineLower);
+                        this.LogEvents.Add(new LogEvent(
                             dtStart,
                             dtStart,
                             LogEventType.Fwhm,
-                            LogLineIndex,
+                            this.LogLineIndex,
                             true,
-                            CurrentTarget,
+                            this.CurrentTarget,
                             tmpFwhm,
-                            Path));
+                            this.Path));
 
                         return true;
                     }
-                }
-                catch
-                {
+                } catch {
                 }
             }
 
@@ -285,8 +306,7 @@ namespace ACPLogAnalyzer
         /// Parse auto-focus time ("start slew to autofocus")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public void ParseAutoFocusTime()
-        {
+        public void ParseAutoFocusTime() {
             //       -----------------------------------------------------------------------------------------
             // NOTE: When processing (successful or otherwise) of this directive is complete, we need to allow
             //       fall-through to the rest of the parsing rules (for the same line) so that "start to slew"
@@ -306,27 +326,22 @@ namespace ACPLogAnalyzer
             //   Exclusions: "plate solve error!" OR "no matching stars found" OR "solution is suspect" OR "**autofocus failed"
             //   Data:       Time span from Begin to End  
 
-            if (LineLower.IndexOf("start slew to autofocus", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+            if (this.LineLower.IndexOf("start slew to autofocus", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Preceded by "re-slew to target"? (only process if "re-slew to target" is not found prev line)
-                    if (GetPreviousLogLine(LogLineIndex).ToLower().IndexOf("re-slew to target", System.StringComparison.Ordinal) == -1)
-                    {
+                    if (this.GetPreviousLogLine(this.LogLineIndex).ToLower().IndexOf("re-slew to target", System.StringComparison.Ordinal) == -1) {
                         // Only process the "start slew to autofocus" if it was NOT part of a center slew (part of an on-going AF op)
 
-                        var dtStart = GetOperationTime(LineLower);
+                        var dtStart = this.GetOperationTime(this.LineLower);
                         if (dtStart != null)  // null if we can't find the start time (unlikely)
                         {
-                            var endIndex = FindAutoFocusOpEnd(GetNextLogLineIndex(LogLineIndex), -1);   // OK: "autofocus finished"
+                            var endIndex = this.FindAutoFocusOpEnd(this.GetNextLogLineIndex(this.LogLineIndex), -1);   // OK: "autofocus finished"
                             // Err: "**autofocus failed"
                             if (endIndex != -1)  // -1 => AF failed (so we discard the mesurement)
                             {
-                                DateTime? dtEnd;
-                                int lineNum;
-                                FindPointingError(GetNextLogLineIndex(endIndex), -1, out dtEnd, out lineNum);
+                                this.FindPointingError(this.GetNextLogLineIndex(endIndex), -1, out DateTime? dtEnd, out int lineNum);
 
-                                dtEnd = CheckOpStartEndTime(dtStart, dtEnd);
+                                dtEnd = this.CheckOpStartEndTime(dtStart, dtEnd);
 
                                 if (dtEnd != null)  // null => an error condition (e.g. a plate solve failure) so we ignore the measure
                                 {
@@ -334,17 +349,16 @@ namespace ACPLogAnalyzer
                                     var opTimeSpan = opTsTmp.Subtract(new TimeSpan(dtStart.Value.Ticks));
 
                                     // Add a log event for the AF time...
-                                    if (opTimeSpan.TotalSeconds >= 0)
-                                    {
-                                        LogEvents.Add(new LogEvent(
+                                    if (opTimeSpan.TotalSeconds >= 0) {
+                                        this.LogEvents.Add(new LogEvent(
                                             dtStart,
                                             dtEnd,
                                             LogEventType.AutoFocus,
-                                            LogLineIndex,
+                                            this.LogLineIndex,
                                             true,
-                                            CurrentTarget,
+                                            this.CurrentTarget,
                                             opTimeSpan.TotalSeconds,
-                                            Path));
+                                            this.Path));
 
                                         return;
                                     }
@@ -352,9 +366,7 @@ namespace ACPLogAnalyzer
                             }
                         }
                     }
-                }
-                catch
-                {
+                } catch {
                 }
             }
         }
@@ -363,8 +375,7 @@ namespace ACPLogAnalyzer
         /// Parse pointing error (object slew) ("start slew to")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public void ParsePointingError()
-        {
+        public void ParsePointingError() {
             // The rule for a pointing error measurement after an object slew (slews to imaging targets, auto-focus targets and
             // return slews from AF targets) is:
             //
@@ -375,19 +386,14 @@ namespace ACPLogAnalyzer
             // Exclusions: Any plate solve errors; "plate solve error!" OR "no matching stars found" OR "solution is suspect"
             // Data:       Next "Pointing error is" in the log
 
-            if (LineLower.IndexOf("start slew to", System.StringComparison.Ordinal) != -1  ||
-                LineLower.IndexOf("all-sky solution successful", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+            if (this.LineLower.IndexOf("start slew to", System.StringComparison.Ordinal) != -1 ||
+                this.LineLower.IndexOf("all-sky solution successful", System.StringComparison.Ordinal) != -1) {
+                try {
                     // *** Pointing error measurement (object slew) ***
                     // Preceded by "re-slew to target"?
-                    if (GetPreviousLogLine(LogLineIndex).ToLower().IndexOf("re-slew to target", System.StringComparison.Ordinal) != -1)
+                    if (this.GetPreviousLogLine(this.LogLineIndex).ToLower().IndexOf("re-slew to target", System.StringComparison.Ordinal) != -1)
                         return;
-
-                    int peLineNum;
-                    DateTime? dtPtErrorTime;
-                    var tmpPtErr = FindPointingError(GetNextLogLineIndex(LogLineIndex), -1, out dtPtErrorTime, out peLineNum);
+                    var tmpPtErr = this.FindPointingError(this.GetNextLogLineIndex(this.LogLineIndex), -1, out DateTime? dtPtErrorTime, out int peLineNum);
 
                     // FindPointingError():
                     // OK:       "pointing error is"
@@ -400,25 +406,22 @@ namespace ACPLogAnalyzer
                     if (tmpPtErr != -1)  // return of negative pointing error signals an error - discard the measurement
                     {
                         // Have we capture this event before as part of an objec center slew event?
-                        if (!HasLogEventBeenCaptured(dtPtErrorTime, LogEventType.PointingErrorCenterSlew))
-                        {
+                        if (!this.HasLogEventBeenCaptured(dtPtErrorTime, LogEventType.PointingErrorCenterSlew)) {
                             // Add a log event for the measurement...
-                            LogEvents.Add(new LogEvent(
+                            this.LogEvents.Add(new LogEvent(
                                 dtPtErrorTime,
                                 dtPtErrorTime,
                                 LogEventType.PointingErrorObjectSlew,
                                 peLineNum,
                                 true,
-                                CurrentTarget,
+                                this.CurrentTarget,
                                 tmpPtErr,
-                                Path));
+                                this.Path));
 
                             return;
                         }
                     }
-                }
-                catch
-                {
+                } catch {
                 }
             }
         }
@@ -427,50 +430,44 @@ namespace ACPLogAnalyzer
         /// Parse slew to target time ("start slew to")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseSlewToTargetTime()
-        {
-            if (LineLower.IndexOf("start slew to", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+        public bool ParseSlewToTargetTime() {
+            if (this.LineLower.IndexOf("start slew to", System.StringComparison.Ordinal) != -1) {
+                try {
                     // *** Slew (to target) time (not centering slews)***
 
                     // Preceded by "start slew to autofocus"?
-                    if (GetPreviousLogLine(LogLineIndex).ToLower().IndexOf("re-slew to target", System.StringComparison.Ordinal) != -1)
+                    if (this.GetPreviousLogLine(this.LogLineIndex).ToLower().IndexOf("re-slew to target", System.StringComparison.Ordinal) != -1)
                         return false;  // Ignore, it was an center slew
 
                     // Now get the start/end time for slew
-                    var dtStart = GetOperationTime(LineLower);
-                    var dtEnd = FindSlewOpEndTime(GetNextLogLineIndex(LogLineIndex), -1);  // OK: "slew complete"
+                    var dtStart = this.GetOperationTime(this.LineLower);
+                    var dtEnd = this.FindSlewOpEndTime(this.GetNextLogLineIndex(this.LogLineIndex), -1);  // OK: "slew complete"
                     // Error: end of log found before "slew complete"
 
-                    dtEnd = CheckOpStartEndTime(dtStart, dtEnd);
-                    if (dtEnd == null) return false;
+                    dtEnd = this.CheckOpStartEndTime(dtStart, dtEnd);
+                    if (dtEnd == null)
+                        return false;
 
                     var opTsTmp = new TimeSpan(dtEnd.Value.Ticks);
-                    if (dtStart != null)
-                    {
+                    if (dtStart != null) {
                         var opTimeSpan = opTsTmp.Subtract(new TimeSpan(dtStart.Value.Ticks));
 
                         // Add a log event for the slew time...
-                        if (opTimeSpan.TotalSeconds >= 0)
-                        {
-                            LogEvents.Add(new LogEvent(
+                        if (opTimeSpan.TotalSeconds >= 0) {
+                            this.LogEvents.Add(new LogEvent(
                                               dtStart,
                                               dtEnd,
                                               LogEventType.SlewTarget,
-                                              LogLineIndex,
+                                              this.LogLineIndex,
                                               true,
-                                              CurrentTarget,
+                                              this.CurrentTarget,
                                               opTimeSpan.TotalSeconds,
-                                              Path));
+                                              this.Path));
 
                             return true;
                         }
                     }
-                }
-                catch
-                {
+                } catch {
                 }
             }
             return false;
@@ -480,8 +477,7 @@ namespace ACPLogAnalyzer
         /// Parse pointing error (center slew) ("re-slew to target")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParsePointingErrorCenterSlew()
-        {
+        public bool ParsePointingErrorCenterSlew() {
             // The rule for a pointing error measurement after a center slew is:
             //  
             // Begin:      "Re-slew to target"
@@ -498,19 +494,14 @@ namespace ACPLogAnalyzer
             //             where there isn't ("Within max error tolerance, no recenter needed").  
             //             I think the rules already account for both of these situations
 
-            if (LineLower.IndexOf("re-slew to target", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+            if (this.LineLower.IndexOf("re-slew to target", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Followed by "Start slew to autofocus"?
-                    if (GetNextLogLine(LogLineIndex).ToLower().IndexOf("start slew to autofocus", System.StringComparison.Ordinal) != -1)
+                    if (this.GetNextLogLine(this.LogLineIndex).ToLower().IndexOf("start slew to autofocus", System.StringComparison.Ordinal) != -1)
                         return false;  // Ignore, it was an object slew
-
-                    DateTime? dtPtErrorTime;
-                    int lineNum;
-                    var tmpPtErr = GetNextLogLine(LogLineIndex).ToLower().IndexOf("start slew to", System.StringComparison.Ordinal) != -1 ? 
-                        FindPointingError(GetNextLogLineIndex(GetNextLogLineIndex(LogLineIndex)), -1, out dtPtErrorTime, out lineNum) : 
-                            FindPointingError(GetNextLogLineIndex(LogLineIndex), -1, out dtPtErrorTime, out lineNum);
+                    var tmpPtErr = this.GetNextLogLine(this.LogLineIndex).ToLower().IndexOf("start slew to", System.StringComparison.Ordinal) != -1 ?
+                        this.FindPointingError(this.GetNextLogLineIndex(this.GetNextLogLineIndex(this.LogLineIndex)), -1, out DateTime? dtPtErrorTime, out int lineNum) :
+                            this.FindPointingError(this.GetNextLogLineIndex(this.LogLineIndex), -1, out dtPtErrorTime, out lineNum);
 
                     // FindPointingError():
                     // OK:       "pointing error is"
@@ -523,21 +514,19 @@ namespace ACPLogAnalyzer
                     if (tmpPtErr != -1)  // return of negative pointing error signals an error - discard the measurement
                     {
                         // Add a log event for the measurement...
-                        LogEvents.Add(new LogEvent(
+                        this.LogEvents.Add(new LogEvent(
                             dtPtErrorTime,
                             dtPtErrorTime,
                             LogEventType.PointingErrorCenterSlew,
                             lineNum,
                             true,
-                            CurrentTarget,
+                            this.CurrentTarget,
                             tmpPtErr,
-                            Path));
+                            this.Path));
 
                         return true;
                     }
-                }
-                catch
-                {
+                } catch {
                 }
             }
 
@@ -548,30 +537,26 @@ namespace ACPLogAnalyzer
         /// Parse plate solve count ("solved!")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParsePlateSolveCount()
-        {
-            if (LineLower.IndexOf("solved!", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+        public bool ParsePlateSolveCount() {
+            if (this.LineLower.IndexOf("solved!", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Get the start/end time for the error
-                    var dtStart = GetOperationTime(LineLower);
-                    if (dtStart == null) return false;  // Can't find the start/end time of the current op
+                    var dtStart = this.GetOperationTime(this.LineLower);
+                    if (dtStart == null)
+                        return false;  // Can't find the start/end time of the current op
 
-                    LogEvents.Add(new LogEvent(
+                    this.LogEvents.Add(new LogEvent(
                         dtStart,
                         dtStart,
                         LogEventType.PlateSolveSuccess,
-                        LogLineIndex,
+                        this.LogLineIndex,
                         true,
-                        CurrentTarget,
+                        this.CurrentTarget,
                         "Plate solve ok",
-                        Path));
+                        this.Path));
 
                     return true;
-                }
-                catch
-                {
+                } catch {
                 }
             }
 
@@ -582,32 +567,28 @@ namespace ACPLogAnalyzer
         /// Parse plate solve error count ("plate solve error!", "no matching stars found", "solution is suspect")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParsePlateSolveErrorCount()
-        {
-            if (LineLower.IndexOf("plate solve error!", System.StringComparison.Ordinal) != -1 ||
-                LineLower.IndexOf("no matching stars found", System.StringComparison.Ordinal) != -1 ||
-                LineLower.IndexOf("solution is suspect", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+        public bool ParsePlateSolveErrorCount() {
+            if (this.LineLower.IndexOf("plate solve error!", System.StringComparison.Ordinal) != -1 ||
+                this.LineLower.IndexOf("no matching stars found", System.StringComparison.Ordinal) != -1 ||
+                this.LineLower.IndexOf("solution is suspect", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Get the start/end time for the error
-                    var dtStart = GetOperationTime(LineLower);
-                    if (dtStart == null) return false;  // Can't find the start/end time of the current op
+                    var dtStart = this.GetOperationTime(this.LineLower);
+                    if (dtStart == null)
+                        return false;  // Can't find the start/end time of the current op
 
-                    LogEvents.Add(new LogEvent(
+                    this.LogEvents.Add(new LogEvent(
                         dtStart,
                         dtStart,
                         LogEventType.PlateSolveFail,
-                        LogLineIndex,
+                        this.LogLineIndex,
                         false,
-                        CurrentTarget,
+                        this.CurrentTarget,
                         "Plate solve fail",
-                        Path));
+                        this.Path));
 
                     return true;
-                }
-                catch
-                {
+                } catch {
                 }
             }
 
@@ -618,30 +599,26 @@ namespace ACPLogAnalyzer
         /// Parse all-sky plate solve count ("all-sky solution successful")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseAllSkyPlateSolveCount()
-        {
-            if (LineLower.IndexOf("all-sky solution successful", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+        public bool ParseAllSkyPlateSolveCount() {
+            if (this.LineLower.IndexOf("all-sky solution successful", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Get the start/end time for the error
-                    var dtStart = GetOperationTime(LineLower);
-                    if (dtStart == null) return false;  // Can't find the start/end time of the current op
+                    var dtStart = this.GetOperationTime(this.LineLower);
+                    if (dtStart == null)
+                        return false;  // Can't find the start/end time of the current op
 
-                    LogEvents.Add(new LogEvent(
+                    this.LogEvents.Add(new LogEvent(
                         dtStart,
                         dtStart,
                         LogEventType.AllSkySolveSuccess,
-                        LogLineIndex,
+                        this.LogLineIndex,
                         true,
-                        CurrentTarget,
+                        this.CurrentTarget,
                         "All-sky plate solve ok",
-                        Path));
+                        this.Path));
 
                     return true;
-                }
-                catch
-                {
+                } catch {
                 }
             }
 
@@ -652,31 +629,27 @@ namespace ACPLogAnalyzer
         /// Parse all-sky plate solve error count ("all-sky solution failed", "all-sky solution was incorrect")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseAllSkyPlateSolveErrorCount()
-        {
-            if (LineLower.IndexOf("all-sky solution failed", System.StringComparison.Ordinal) != -1 ||
-                LineLower.IndexOf("all-sky solution was incorrect", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+        public bool ParseAllSkyPlateSolveErrorCount() {
+            if (this.LineLower.IndexOf("all-sky solution failed", System.StringComparison.Ordinal) != -1 ||
+                this.LineLower.IndexOf("all-sky solution was incorrect", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Get the start/end time for the error
-                    var dtStart = GetOperationTime(LineLower);
-                    if (dtStart == null) return false;  // Can't find the start/end time of the current op
+                    var dtStart = this.GetOperationTime(this.LineLower);
+                    if (dtStart == null)
+                        return false;  // Can't find the start/end time of the current op
 
-                    LogEvents.Add(new LogEvent(
+                    this.LogEvents.Add(new LogEvent(
                         dtStart,
                         dtStart,
                         LogEventType.AllSkySolveFail,
-                        LogLineIndex,
+                        this.LogLineIndex,
                         false,
-                        CurrentTarget,
+                        this.CurrentTarget,
                         "All-sky plate solve fail",
-                        Path));
+                        this.Path));
 
                     return true;
-                }
-                catch
-                {
+                } catch {
                 }
             }
 
@@ -687,30 +660,26 @@ namespace ACPLogAnalyzer
         /// Parse auto-focus count ("auto-focus successful!")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public void ParseAutoFocusCount()
-        {
-            if (LineLower.IndexOf("auto-focus successful!", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+        public void ParseAutoFocusCount() {
+            if (this.LineLower.IndexOf("auto-focus successful!", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Get the start/end time for the error
-                    var dtStart = GetOperationTime(LineLower);
-                    if (dtStart == null) return;
+                    var dtStart = this.GetOperationTime(this.LineLower);
+                    if (dtStart == null)
+                        return;
 
-                    LogEvents.Add(new LogEvent(
+                    this.LogEvents.Add(new LogEvent(
                         dtStart,
                         dtStart,
                         LogEventType.AutoFocusSuccess,
-                        LogLineIndex,
+                        this.LogLineIndex,
                         true,
-                        CurrentTarget,
+                        this.CurrentTarget,
                         "AF ok",
-                        Path));
+                        this.Path));
 
                     return;
-                }
-                catch
-                {
+                } catch {
                 }
             }
         }
@@ -719,30 +688,26 @@ namespace ACPLogAnalyzer
         /// Parse auto-focus error count ("**autofocus failed")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseAutoFocusErrorCount()
-        {
-            if (LineLower.IndexOf("**autofocus failed", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+        public bool ParseAutoFocusErrorCount() {
+            if (this.LineLower.IndexOf("**autofocus failed", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Get the start/end time for the error
-                    var dtStart = GetOperationTime(LineLower);
-                    if (dtStart == null) return false;  // Can't find the start/end time of the current op
+                    var dtStart = this.GetOperationTime(this.LineLower);
+                    if (dtStart == null)
+                        return false;  // Can't find the start/end time of the current op
 
-                    LogEvents.Add(new LogEvent(
+                    this.LogEvents.Add(new LogEvent(
                         dtStart,
                         dtStart,
                         LogEventType.AutoFocusFail,
-                        LogLineIndex,
+                        this.LogLineIndex,
                         false,
-                        CurrentTarget,
+                        this.CurrentTarget,
                         "AF fail",
-                        Path));
+                        this.Path));
 
                     return true;
-                }
-                catch
-                {
+                } catch {
                 }
             }
 
@@ -753,28 +718,24 @@ namespace ACPLogAnalyzer
         /// Parse HFD value ("HFD =")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseHfd()
-        {
-            if (LineLower.IndexOf("auto-focus successful!", System.StringComparison.Ordinal) != -1)
-            {
+        public bool ParseHfd() {
+            if (this.LineLower.IndexOf("auto-focus successful!", System.StringComparison.Ordinal) != -1) {
                 // 01:48:36   FocusMax auto-focus successful!
                 // 01:48:36     HFD = 3.26
 
                 // Get the HFD...
-                DateTime? dtOpTime;
-                var tmpHfd = FindHfdOpEndTime(GetNextLogLineIndex(LogLineIndex), 10, out dtOpTime);
-                if (tmpHfd != -1)
-                {
+                var tmpHfd = this.FindHfdOpEndTime(this.GetNextLogLineIndex(this.LogLineIndex), 10, out DateTime? dtOpTime);
+                if (tmpHfd != -1) {
                     // Add a log event for the HFD measurement...
-                    LogEvents.Add(new LogEvent(
+                    this.LogEvents.Add(new LogEvent(
                         dtOpTime,
                         dtOpTime,
                         LogEventType.Hfd,
-                        LogLineIndex + 1,
+                        this.LogLineIndex + 1,
                         true,
-                        CurrentTarget,
+                        this.CurrentTarget,
                         tmpHfd,
-                        Path));
+                        this.Path));
 
                     return true;
                 }
@@ -787,30 +748,26 @@ namespace ACPLogAnalyzer
         /// Parse script error count ("script error")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseScriptError()
-        {
-            if (LineLower.IndexOf("script error", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+        public bool ParseScriptError() {
+            if (this.LineLower.IndexOf("script error", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Get the start/end time for the error
-                    var dtStart = GetOperationTime(LineLower);
-                    if (dtStart == null) return false;  // Can't find the start/end time of the current op
+                    var dtStart = this.GetOperationTime(this.LineLower);
+                    if (dtStart == null)
+                        return false;  // Can't find the start/end time of the current op
 
-                    LogEvents.Add(new LogEvent(
+                    this.LogEvents.Add(new LogEvent(
                         dtStart,
                         dtStart,
                         LogEventType.ScriptError,
-                        LogLineIndex,
+                        this.LogLineIndex,
                         false,
-                        CurrentTarget,
+                        this.CurrentTarget,
                         "Script error",
-                        Path));
+                        this.Path));
 
                     return true;
-                }
-                catch
-                {
+                } catch {
                 }
             }
 
@@ -821,30 +778,26 @@ namespace ACPLogAnalyzer
         /// Parse script abort count ("script was aborted")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseScriptAbort()
-        {
-            if (LineLower.IndexOf("script was aborted", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+        public bool ParseScriptAbort() {
+            if (this.LineLower.IndexOf("script was aborted", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Get the start/end time for the abort
-                    var dtStart = GetOperationTime(LineLower);
-                    if (dtStart == null) return false;  // Can't find the start/end time of the current op
+                    var dtStart = this.GetOperationTime(this.LineLower);
+                    if (dtStart == null)
+                        return false;  // Can't find the start/end time of the current op
 
-                    LogEvents.Add(new LogEvent(
+                    this.LogEvents.Add(new LogEvent(
                         dtStart,
                         dtStart,
                         LogEventType.ScriptAbort,
-                        LogLineIndex,
+                        this.LogLineIndex,
                         false,
-                        CurrentTarget,
+                        this.CurrentTarget,
                         "Script abort",
-                        Path));
+                        this.Path));
 
                     return true;
-                }
-                catch
-                {
+                } catch {
                 }
             }
 
@@ -855,44 +808,37 @@ namespace ACPLogAnalyzer
         /// Parse guider start-up time ("trying to autoguide")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseGuiderStartUpTime()
-        {
-            if (LineLower.IndexOf("trying to autoguide", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+        public bool ParseGuiderStartUpTime() {
+            if (this.LineLower.IndexOf("trying to autoguide", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Get the start/end time for guider start-up
-                    int lineNum;
-                    var dtStart = GetOperationTime(LineLower);
-                    var dtEnd = FindGuiderStartUpOpEndTime(GetNextLogLineIndex(LogLineIndex), -1, out lineNum);  // Look for "autoguiding at nnn"
-                    
-                    dtEnd = CheckOpStartEndTime(dtStart, dtEnd);
-                    if (dtEnd == null) return false;
+                    var dtStart = this.GetOperationTime(this.LineLower);
+                    var dtEnd = this.FindGuiderStartUpOpEndTime(this.GetNextLogLineIndex(this.LogLineIndex), -1, out int lineNum);  // Look for "autoguiding at nnn"
+
+                    dtEnd = this.CheckOpStartEndTime(dtStart, dtEnd);
+                    if (dtEnd == null)
+                        return false;
 
                     var opTsTmp = new TimeSpan(dtEnd.Value.Ticks);
-                    if (dtStart != null)
-                    {
+                    if (dtStart != null) {
                         var opTimeSpan = opTsTmp.Subtract(new TimeSpan(dtStart.Value.Ticks));
 
                         // Add a log event for the guider start-up time...
-                        if (opTimeSpan.TotalSeconds >= 0)
-                        {
-                            LogEvents.Add(new LogEvent(
+                        if (opTimeSpan.TotalSeconds >= 0) {
+                            this.LogEvents.Add(new LogEvent(
                                               dtStart,
                                               dtEnd,
                                               LogEventType.GuiderStartUp,
-                                              LogLineIndex,
+                                              this.LogLineIndex,
                                               true,
-                                              CurrentTarget,
+                                              this.CurrentTarget,
                                               opTimeSpan.TotalSeconds,
-                                              Path));
+                                              this.Path));
 
                             return true;
                         }
                     }
-                }
-                catch
-                {
+                } catch {
                 }
             }
 
@@ -903,44 +849,38 @@ namespace ACPLogAnalyzer
         /// Parse guider settle time ("guider check ok")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseGuiderSettleTime()
-        {
-            if (LineLower.IndexOf("guider check ok", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+        public bool ParseGuiderSettleTime() {
+            if (this.LineLower.IndexOf("guider check ok", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Get the start/end time for guider settle
-                    int lineNum;
-                    var dtEnd = GetOperationTime(LineLower);  // Note we have the END time for when the guider settled
-                    var dtStart = FindGuiderSettleOpStartTime(GetPreviousLogLineIndex(LogLineIndex), -1, out lineNum);  // Now find the start time (scan back up the log)
+                    var dtEnd = this.GetOperationTime(this.LineLower);  // Note we have the END time for when the guider settled
+                    var dtStart = this.FindGuiderSettleOpStartTime(this.GetPreviousLogLineIndex(this.LogLineIndex), -1, out int lineNum);  // Now find the start time (scan back up the log)
 
-                    dtEnd = CheckOpStartEndTime(dtStart, dtEnd);
-                    if (dtEnd == null) return false;
+                    dtEnd = this.CheckOpStartEndTime(dtStart, dtEnd);
+                    if (dtEnd == null)
+                        return false;
 
                     var opTsTmp = new TimeSpan(dtEnd.Value.Ticks);
-                    if (dtStart != null)
-                    {
+                    if (dtStart != null) {
                         var opTimeSpan = opTsTmp.Subtract(new TimeSpan(dtStart.Value.Ticks));
 
                         // Add a log event for the guider settle time...
                         if (opTimeSpan.TotalSeconds >= 0)  // Note: Changed the test from "> 0" to ">= 0" as sometimes the guider can settle 'instantly'
                         {
-                            LogEvents.Add(new LogEvent(
+                            this.LogEvents.Add(new LogEvent(
                                               dtStart,
                                               dtEnd,
                                               LogEventType.GuiderSettle,
                                               lineNum,
                                               true,
-                                              CurrentTarget,
+                                              this.CurrentTarget,
                                               opTimeSpan.TotalSeconds,
-                                              Path));
+                                              this.Path));
 
                             return true;
                         }
                     }
-                }
-                catch
-                {
+                } catch {
                 }
             }
 
@@ -951,8 +891,7 @@ namespace ACPLogAnalyzer
         /// Parse filter change time ("switching from")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseFilterChangeTime()
-        {
+        public bool ParseFilterChangeTime() {
             // The rule for filter change time (versions prior to 1.2 were not correctly calulating the time) is:
             //
             // Begin:      "switching from"
@@ -975,41 +914,36 @@ namespace ACPLogAnalyzer
             // 00:10:55   Focus change of 40 steps required  [this line is only present in systems where filters are not parfocal]
             // >00:11:07   (taking 15 sec. exposure, Clear filter, binning = 3)
 
-            if (LineLower.IndexOf("switching from", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+            if (this.LineLower.IndexOf("switching from", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Get the start/end time for filter change
-                    var dtStart = GetOperationTime(LineLower);
-                    var dtEnd = FindFilterChangeOpEndTime(GetNextLogLineIndex(LogLineIndex), 5);
+                    var dtStart = this.GetOperationTime(this.LineLower);
+                    var dtEnd = this.FindFilterChangeOpEndTime(this.GetNextLogLineIndex(this.LogLineIndex), 5);
 
-                    dtEnd = CheckOpStartEndTime(dtStart, dtEnd);
-                    if (dtEnd == null) return false;
+                    dtEnd = this.CheckOpStartEndTime(dtStart, dtEnd);
+                    if (dtEnd == null)
+                        return false;
 
                     var opTsTmp = new TimeSpan(dtEnd.Value.Ticks);
-                    if (dtStart != null)
-                    {
+                    if (dtStart != null) {
                         var opTimeSpan = opTsTmp.Subtract(new TimeSpan(dtStart.Value.Ticks));
 
                         // Add a log event for the filter change time...
-                        if (opTimeSpan.TotalSeconds >= 0)
-                        {
-                            LogEvents.Add(new LogEvent(
+                        if (opTimeSpan.TotalSeconds >= 0) {
+                            this.LogEvents.Add(new LogEvent(
                                               dtStart,
                                               dtEnd,
                                               LogEventType.FilterChange,
-                                              LogLineIndex,
+                                              this.LogLineIndex,
                                               true,
-                                              CurrentTarget,
+                                              this.CurrentTarget,
                                               opTimeSpan.TotalSeconds,
-                                              Path));
+                                              this.Path));
 
                             return true;
                         }
                     }
-                }
-                catch
-                {
+                } catch {
                 }
             }
 
@@ -1020,42 +954,36 @@ namespace ACPLogAnalyzer
         /// Parse wait time ("wait until")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseWaitTime()
-        {
-            if (LineLower.IndexOf("wait until", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+        public bool ParseWaitTime() {
+            if (this.LineLower.IndexOf("wait until", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Get the start/end time for the wait
-                    var dtStart = GetOperationTime(LineLower);
-                    var dtEnd = FindWaitOpEndTime(GetNextLogLineIndex(LogLineIndex), -1);
+                    var dtStart = this.GetOperationTime(this.LineLower);
+                    var dtEnd = this.FindWaitOpEndTime(this.GetNextLogLineIndex(this.LogLineIndex), -1);
 
-                    dtEnd = CheckOpStartEndTime(dtStart, dtEnd);
-                    if (dtEnd == null) return false;
+                    dtEnd = this.CheckOpStartEndTime(dtStart, dtEnd);
+                    if (dtEnd == null)
+                        return false;
 
                     var opTsTmp = new TimeSpan(dtEnd.Value.Ticks);
-                    if (dtStart != null)
-                    {
+                    if (dtStart != null) {
                         var opTimeSpan = opTsTmp.Subtract(new TimeSpan(dtStart.Value.Ticks));
 
-                        if (opTimeSpan.TotalSeconds >= 0)
-                        {
-                            LogEvents.Add(new LogEvent(
+                        if (opTimeSpan.TotalSeconds >= 0) {
+                            this.LogEvents.Add(new LogEvent(
                                               dtStart,
                                               dtEnd,
                                               LogEventType.Wait,
-                                              LogLineIndex,
+                                              this.LogLineIndex,
                                               true,
-                                              CurrentTarget,
+                                              this.CurrentTarget,
                                               opTimeSpan.TotalSeconds,
-                                              Path));
+                                              this.Path));
 
                             return true;
                         }
                     }
-                }
-                catch
-                {
+                } catch {
                 }
             }
 
@@ -1066,43 +994,37 @@ namespace ACPLogAnalyzer
         /// Parse pointing exposure/plate solve time ("updating pointing")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParsePointingExpPlateSolveTime()
-        {
-            if (LineLower.IndexOf("updating pointing", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+        public bool ParsePointingExpPlateSolveTime() {
+            if (this.LineLower.IndexOf("updating pointing", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Get the start/end time for the plate solve
-                    var dtStart = GetOperationTime(LineLower);
-                    var dtEnd = FindPlateSolveOpEndTime(GetNextLogLineIndex(LogLineIndex), -1);  // Returns null if the op failed
-                    
-                    dtEnd = CheckOpStartEndTime(dtStart, dtEnd);
-                    if (dtEnd == null) return false;
+                    var dtStart = this.GetOperationTime(this.LineLower);
+                    var dtEnd = this.FindPlateSolveOpEndTime(this.GetNextLogLineIndex(this.LogLineIndex), -1);  // Returns null if the op failed
+
+                    dtEnd = this.CheckOpStartEndTime(dtStart, dtEnd);
+                    if (dtEnd == null)
+                        return false;
 
                     var opTsTmp = new TimeSpan(dtEnd.Value.Ticks);
-                    if (dtStart != null)
-                    {
+                    if (dtStart != null) {
                         var opTimeSpan = opTsTmp.Subtract(new TimeSpan(dtStart.Value.Ticks));
 
                         // Add a log event...
-                        if (opTimeSpan.TotalSeconds >= 0)
-                        {
-                            LogEvents.Add(new LogEvent(
+                        if (opTimeSpan.TotalSeconds >= 0) {
+                            this.LogEvents.Add(new LogEvent(
                                               dtStart,
                                               dtEnd,
                                               LogEventType.PointingExpAndPlateSolve,
-                                              LogLineIndex,
+                                              this.LogLineIndex,
                                               true,
-                                              CurrentTarget,
+                                              this.CurrentTarget,
                                               opTimeSpan.TotalSeconds,
-                                              Path));
+                                              this.Path));
 
                             return true;
                         }
                     }
-                }
-                catch
-                {
+                } catch {
                 }
             }
 
@@ -1113,43 +1035,37 @@ namespace ACPLogAnalyzer
         /// Parse all-sky plate solve time ("attempting all-sky plate solution")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseAllSkyPlateSolveTime()
-        {
-            if (LineLower.IndexOf("attempting all-sky plate solution", System.StringComparison.Ordinal) != -1)
-            {
-                try
-                {
+        public bool ParseAllSkyPlateSolveTime() {
+            if (this.LineLower.IndexOf("attempting all-sky plate solution", System.StringComparison.Ordinal) != -1) {
+                try {
                     // Get the start/end time for the all-sky plate solve
-                    var dtStart = GetOperationTime(LineLower);
-                    var dtEnd = FindAllSkyPlateSolveOpEndTime(GetNextLogLineIndex(LogLineIndex), -1);  // Returns null if the op failed
+                    var dtStart = this.GetOperationTime(this.LineLower);
+                    var dtEnd = this.FindAllSkyPlateSolveOpEndTime(this.GetNextLogLineIndex(this.LogLineIndex), -1);  // Returns null if the op failed
 
-                    dtEnd = CheckOpStartEndTime(dtStart, dtEnd);
-                    if (dtEnd == null) return false;
+                    dtEnd = this.CheckOpStartEndTime(dtStart, dtEnd);
+                    if (dtEnd == null)
+                        return false;
 
                     var opTsTmp = new TimeSpan(dtEnd.Value.Ticks);
-                    if (dtStart != null)
-                    {
+                    if (dtStart != null) {
                         var opTimeSpan = opTsTmp.Subtract(new TimeSpan(dtStart.Value.Ticks));
 
                         // Add a log event...
-                        if (opTimeSpan.TotalSeconds >= 0)
-                        {
-                            LogEvents.Add(new LogEvent(
+                        if (opTimeSpan.TotalSeconds >= 0) {
+                            this.LogEvents.Add(new LogEvent(
                                               dtStart,
                                               dtEnd,
                                               LogEventType.AllSkySolveTime,
-                                              LogLineIndex,
+                                              this.LogLineIndex,
                                               true,
-                                              CurrentTarget,
+                                              this.CurrentTarget,
                                               opTimeSpan.TotalSeconds,
-                                              Path));
+                                              this.Path));
 
                             return true;
                         }
                     }
-                }
-                catch
-                {
+                } catch {
                 }
             }
 
@@ -1160,26 +1076,23 @@ namespace ACPLogAnalyzer
         /// Guider failure ("**autoguiding failed", "excessive guiding errors", "guider stopped or lost star")
         /// </summary>
         /// <returns>Returns true if the event was successfully parsed, false otherwise</returns>
-        public bool ParseGuiderFailure()
-        {
-            if (LineLower.IndexOf("**autoguiding failed", System.StringComparison.Ordinal) != -1 ||
-                LineLower.IndexOf("excessive guiding errors", System.StringComparison.Ordinal) != -1 ||
-                LineLower.IndexOf("guider stopped or lost star", System.StringComparison.Ordinal) != -1)
-            {
+        public bool ParseGuiderFailure() {
+            if (this.LineLower.IndexOf("**autoguiding failed", System.StringComparison.Ordinal) != -1 ||
+                this.LineLower.IndexOf("excessive guiding errors", System.StringComparison.Ordinal) != -1 ||
+                this.LineLower.IndexOf("guider stopped or lost star", System.StringComparison.Ordinal) != -1) {
                 // We found a guiding failure - see if ACP carried on imaging anyway (this is the condition 
                 // [failure then continue] that we count)
-                if (FindGuiderFailureRecovery(GetNextLogLineIndex(LogLineIndex), 5))
-                {
-                    var dtStart = GetOperationTime(LineLower);
-                    LogEvents.Add(new LogEvent(
+                if (this.FindGuiderFailureRecovery(this.GetNextLogLineIndex(this.LogLineIndex), 5)) {
+                    var dtStart = this.GetOperationTime(this.LineLower);
+                    this.LogEvents.Add(new LogEvent(
                             dtStart,
                             dtStart,
                             LogEventType.GuiderFail,
-                            LogLineIndex,
+                            this.LogLineIndex,
                             false,
-                            CurrentTarget,
+                            this.CurrentTarget,
                             true,  // true signals that imaging continued unguided
-                            Path));
+                            this.Path));
 
                     return true;
                 }
@@ -1195,18 +1108,13 @@ namespace ACPLogAnalyzer
         /// <param name="lineIndex">Log line index to start searching from</param>
         /// <returns>Returns the line that logically immediately precedes the line indicated by lineIndex (the current line), or
         /// an empty string if no suitable line is found</returns>
-        private string GetPreviousLogLine(int lineIndex)
-        {
-            try
-            {
-                for (var tmpLineIndex = lineIndex - 1 /* Start BEFORE current line */; tmpLineIndex > 0; tmpLineIndex--)
-                {
+        private string GetPreviousLogLine(int lineIndex) {
+            try {
+                for (var tmpLineIndex = lineIndex - 1 /* Start BEFORE current line */; tmpLineIndex > 0; tmpLineIndex--) {
                     if (this.LogFileText[tmpLineIndex][0].CompareTo('#') != 0)
                         return this.LogFileText[tmpLineIndex];
                 }
-            }
-            catch
-            {
+            } catch {
             }
             return "";  // Start of log found before suitable line
         }
@@ -1218,18 +1126,13 @@ namespace ACPLogAnalyzer
         /// <param name="lineIndex">Log line index to start searching from</param>
         /// <returns>Returns the line that logically immediately follows the line indicated by lineIndex (the current line), or
         /// an empty string if no suitable line is found</returns>
-        private string GetNextLogLine(int lineIndex)
-        {
-            try
-            {
-                for (var tmpLineIndex = lineIndex + 1 /* Start AFTER the current line */; tmpLineIndex < LogFileText.Count; tmpLineIndex++)
-                {
+        private string GetNextLogLine(int lineIndex) {
+            try {
+                for (var tmpLineIndex = lineIndex + 1 /* Start AFTER the current line */; tmpLineIndex < this.LogFileText.Count; tmpLineIndex++) {
                     if (this.LogFileText[tmpLineIndex][0].CompareTo('#') != 0)
                         return this.LogFileText[tmpLineIndex];
                 }
-            }
-            catch
-            {
+            } catch {
             }
             return "";  // End of log found before suitable line
         }
@@ -1241,18 +1144,13 @@ namespace ACPLogAnalyzer
         /// <param name="lineIndex">Log line index to start searching from</param>
         /// <returns>Returns the index of the line that logically immediately precedes the line indicated by lineIndex (the current line),
         /// or 0 if no suitable line is found</returns>
-        private int GetPreviousLogLineIndex(int lineIndex)
-        {
-            try
-            {
-                for (var tmpLineIndex = lineIndex - 1 /* Start BEFORE current line */; tmpLineIndex > 0; tmpLineIndex--)
-                {
+        private int GetPreviousLogLineIndex(int lineIndex) {
+            try {
+                for (var tmpLineIndex = lineIndex - 1 /* Start BEFORE current line */; tmpLineIndex > 0; tmpLineIndex--) {
                     if (this.LogFileText[tmpLineIndex][0].CompareTo('#') != 0)
                         return tmpLineIndex;
                 }
-            }
-            catch
-            {
+            } catch {
             }
             return 0;  // Start of log found before suitable line
         }
@@ -1264,20 +1162,15 @@ namespace ACPLogAnalyzer
         /// <param name="lineIndex">Log line index to start searching from</param>
         /// <returns>Returns the index of the line that logically immediately follows the line indicated by lineIndex (the current line),
         /// or the highlest line number in the log if no suitable line is found</returns>
-        private int GetNextLogLineIndex(int lineIndex)
-        {
-            try
-            {
-                for (var tmpLineIndex = lineIndex + 1 /* Start AFTER the current line */; tmpLineIndex < LogFileText.Count; tmpLineIndex++)
-                {
+        private int GetNextLogLineIndex(int lineIndex) {
+            try {
+                for (var tmpLineIndex = lineIndex + 1 /* Start AFTER the current line */; tmpLineIndex < this.LogFileText.Count; tmpLineIndex++) {
                     if (this.LogFileText[tmpLineIndex][0].CompareTo('#') != 0)
                         return tmpLineIndex;
                 }
+            } catch {
             }
-            catch
-            {
-            }
-            return LogFileText.Count;  // End of log found before suitable line
+            return this.LogFileText.Count;  // End of log found before suitable line
         }
 
         /// <summary>
@@ -1285,8 +1178,7 @@ namespace ACPLogAnalyzer
         /// </summary>
         /// <param name="lineIndex">Log line index</param>
         /// <returns>Returns true if the current line is a comment line (starts with '#'), false otherwise</returns>
-        private bool IsCommentLine(int lineIndex)
-        {
+        private bool IsCommentLine(int lineIndex) {
             return this.LogFileText[lineIndex][0].CompareTo('#') == 0;
         }
 
@@ -1298,29 +1190,25 @@ namespace ACPLogAnalyzer
         /// <param name="lineIndex">Log line index</param>
         /// <param name="maxLinesToScan">Maximum number of lines to scan before giving up</param>
         /// <returns>Returns true if the FWHM is part of an imaging exposure, false otherwise</returns>
-        private bool IsImagingFwhm(int lineIndex, int maxLinesToScan)
-        {
-            try
-            {
+        private bool IsImagingFwhm(int lineIndex, int maxLinesToScan) {
+            try {
                 var lineScanCount = 0;
                 if (maxLinesToScan == -1)
                     maxLinesToScan = int.MaxValue;  // Unlimited
 
-                for (var tmpLineIndex = lineIndex; tmpLineIndex > 0 && lineScanCount < maxLinesToScan; tmpLineIndex--)
-                {
-                    if (IsCommentLine(tmpLineIndex)) continue;
+                for (var tmpLineIndex = lineIndex; tmpLineIndex > 0 && lineScanCount < maxLinesToScan; tmpLineIndex--) {
+                    if (this.IsCommentLine(tmpLineIndex))
+                        continue;
 
                     lineScanCount++;
                     if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("imaging to", System.StringComparison.Ordinal) != -1)
                         return true;
-                    
+
                     if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("updating pointing", System.StringComparison.Ordinal) != -1 ||
                         (this.LogFileText[tmpLineIndex].ToLower().IndexOf("image fwhm is", System.StringComparison.Ordinal) != -1))
                         return false;
                 }
-            }
-            catch
-            {
+            } catch {
             }
             return false;
         }
@@ -1332,22 +1220,21 @@ namespace ACPLogAnalyzer
         /// <param name="maxLinesToScan">Number of lines to scan before reporting an error</param>
         /// <param name="opDateTime"></param>
         /// <returns>Returns a valid Exposure object if the exposure is found, null otherwise</returns>
-        private Exposure FindExposure(int lineIndex, int maxLinesToScan, out DateTime? opDateTime)
-        {
+        private Exposure FindExposure(int lineIndex, int maxLinesToScan, out DateTime? opDateTime) {
             var lineScanCount = 0;
             if (maxLinesToScan == -1)
                 maxLinesToScan = int.MaxValue;  // Unlimited
 
-            try
-            {
-                for (var tmpLineIndex = lineIndex; tmpLineIndex < LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++)
-                {
-                    if (IsCommentLine(tmpLineIndex)) continue;
+            try {
+                for (var tmpLineIndex = lineIndex; tmpLineIndex < this.LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++) {
+                    if (this.IsCommentLine(tmpLineIndex))
+                        continue;
 
                     lineScanCount++;
                     var lineLower = this.LogFileText[tmpLineIndex].ToLower();
 
-                    if (lineLower.IndexOf("taking", System.StringComparison.Ordinal) == -1) continue;
+                    if (lineLower.IndexOf("taking", System.StringComparison.Ordinal) == -1)
+                        continue;
 
                     // The line here will take the format:
                     // (taking {duration} sec. exposure, {filterName} filter, binning = {bin})
@@ -1356,8 +1243,7 @@ namespace ACPLogAnalyzer
                     // Get the exposure duration...
                     var tmpStr = lineLower.Substring(lineLower.IndexOf("taking", System.StringComparison.Ordinal) + "taking".Length + 1);
                     tmpStr = tmpStr.Substring(0, tmpStr.IndexOf("s", System.StringComparison.Ordinal));
-                    double tmpDuration;
-                    tmpExposure.Duration = !double.TryParse(tmpStr, out tmpDuration) ? 0 : tmpDuration;
+                    tmpExposure.Duration = !double.TryParse(tmpStr, out double tmpDuration) ? 0 : tmpDuration;
 
                     // Get the exposure filter name...
                     tmpStr = lineLower.Substring(lineLower.IndexOf("exposure", System.StringComparison.Ordinal) + "exposure".Length + 1);
@@ -1369,15 +1255,12 @@ namespace ACPLogAnalyzer
                     tmpStr = tmpStr.Substring(0, tmpStr.IndexOf(")", System.StringComparison.Ordinal));
                     tmpStr = tmpStr.Substring(tmpStr.IndexOf("=", System.StringComparison.Ordinal) + 1);
 
-                    int tmpBin;
-                    tmpExposure.Bin = !int.TryParse(tmpStr, out tmpBin) ? 0 : tmpBin;
+                    tmpExposure.Bin = !int.TryParse(tmpStr, out int tmpBin) ? 0 : tmpBin;
 
-                    opDateTime = GetOperationTime(lineLower);
+                    opDateTime = this.GetOperationTime(lineLower);
                     return tmpExposure;
                 }
-            }
-            catch
-            {
+            } catch {
             }
 
             opDateTime = null;
@@ -1394,53 +1277,48 @@ namespace ACPLogAnalyzer
         /// <param name="opDateTime">A nullable DateTime that will contain the time of the pointing error</param>
         /// <param name="lineNum"></param>
         /// <returns>Returns the pointing error value, -1 otherwise (or an error was encountered)</returns>
-        private double FindPointingError(int lineIndex, int maxLinesToScan, out DateTime? opDateTime, out int lineNum)
-        {
+        private double FindPointingError(int lineIndex, int maxLinesToScan, out DateTime? opDateTime, out int lineNum) {
             var lineScanCount = 0;
             if (maxLinesToScan == -1)
                 maxLinesToScan = int.MaxValue;  // Unlimited
 
-            try
-            {
-                for (var tmpLineIndex = lineIndex; tmpLineIndex < LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++)
-                {
-                    if (IsCommentLine(tmpLineIndex)) continue;
+            try {
+                for (var tmpLineIndex = lineIndex; tmpLineIndex < this.LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++) {
+                    if (this.IsCommentLine(tmpLineIndex))
+                        continue;
 
                     lineScanCount++;
                     var tmpLine = this.LogFileText[tmpLineIndex].ToLower();
                     if (tmpLine.IndexOf("plate solve error!", System.StringComparison.Ordinal) != -1 ||
                         tmpLine.IndexOf("no matching stars found", System.StringComparison.Ordinal) != -1 ||
                         tmpLine.IndexOf("solution is suspect", System.StringComparison.Ordinal) != -1 ||
-                        tmpLine.IndexOf("re-slew to target", System.StringComparison.Ordinal) != -1)
-                    {
+                        tmpLine.IndexOf("re-slew to target", System.StringComparison.Ordinal) != -1) {
                         // Finding any of the above before we find the point error value is an error condition
                         break;
                     }
-                    
-                    if (tmpLine.IndexOf("start slew to", System.StringComparison.Ordinal) != -1)
-                    {
+
+                    if (tmpLine.IndexOf("start slew to", System.StringComparison.Ordinal) != -1) {
                         if (tmpLine.IndexOf("start slew to autofocus", System.StringComparison.Ordinal) != -1)
                             continue;  // That's OK - continue scanning for the the pointing error measurement
-                        
+
                         break;  // Slew to a target other than AF is an error at this point
                     }
 
-                    if (tmpLine.IndexOf("pointing error is", System.StringComparison.Ordinal) == -1) continue;
-                    
+                    if (tmpLine.IndexOf("pointing error is", System.StringComparison.Ordinal) == -1)
+                        continue;
+
                     // Get the pointing error...
                     var tmpStr = tmpLine.Substring(tmpLine.IndexOf("is", System.StringComparison.Ordinal) + "is".Length + 1);
                     tmpStr = tmpStr.Substring(0, tmpStr.IndexOf("arcmin", System.StringComparison.Ordinal));
 
-                    double tmpPtErr;
-                    if (!double.TryParse(tmpStr, out tmpPtErr)) continue;
+                    if (!double.TryParse(tmpStr, out double tmpPtErr))
+                        continue;
 
-                    opDateTime = GetOperationTime(tmpLine);
+                    opDateTime = this.GetOperationTime(tmpLine);
                     lineNum = tmpLineIndex;
                     return tmpPtErr;
                 }
-            }
-            catch
-            {
+            } catch {
             }
 
             opDateTime = null;
@@ -1456,11 +1334,8 @@ namespace ACPLogAnalyzer
         /// <param name="lineIndex">Log line index to start searching from</param>
         /// <param name="maxLinesToScan">Number of lines to scan before reporting an error</param>
         /// <returns>Returns the pointing error value, -1 otherwise (or an error was encountered)</returns>
-        private double FindPointingError(int lineIndex, int maxLinesToScan)
-        {
-            DateTime? tmpDate;
-            int lineNum;
-            return FindPointingError(lineIndex, maxLinesToScan, out tmpDate, out lineNum);
+        private double FindPointingError(int lineIndex, int maxLinesToScan) {
+            return this.FindPointingError(lineIndex, maxLinesToScan, out DateTime? tmpDate, out int lineNum);
         }
 
         /// <summary>
@@ -1469,28 +1344,24 @@ namespace ACPLogAnalyzer
         /// <param name="lineIndex">Log line index to start searching from</param>/// 
         /// <param name="maxLinesToScan">Number of lines to scan before reporting an error</param>
         /// <returns>Returns the index of the the ending statement</returns>
-        private int FindAutoFocusOpEnd(int lineIndex, int maxLinesToScan)
-        {
-            try
-            {
+        private int FindAutoFocusOpEnd(int lineIndex, int maxLinesToScan) {
+            try {
                 var lineScanCount = 0;
                 if (maxLinesToScan == -1)
                     maxLinesToScan = int.MaxValue;  // Unlimited
 
-                for (var tmpLineIndex = lineIndex; tmpLineIndex < LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++)
-                {
-                    if (IsCommentLine(tmpLineIndex)) continue;
+                for (var tmpLineIndex = lineIndex; tmpLineIndex < this.LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++) {
+                    if (this.IsCommentLine(tmpLineIndex))
+                        continue;
 
                     lineScanCount++;
                     if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("**autofocus failed", System.StringComparison.Ordinal) != -1)
                         return -1;  // AF failed
-                    
+
                     if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("autofocus finished", System.StringComparison.Ordinal) != -1)
                         return tmpLineIndex;
                 }
-            }
-            catch
-            {
+            } catch {
             }
             return -1;  // Error - couldn't find the end of AF
         }
@@ -1502,26 +1373,24 @@ namespace ACPLogAnalyzer
         /// <param name="maxLinesToScan">Number of lines to scan before reporting an error</param>
         /// <param name="lineNum"></param>
         /// <returns>Return the DateTime of the event</returns>
-        private DateTime? FindGuiderSettleOpStartTime(int lineIndex, int maxLinesToScan, out int lineNum)
-        {
-            try
-            {
+        private DateTime? FindGuiderSettleOpStartTime(int lineIndex, int maxLinesToScan, out int lineNum) {
+            try {
                 var lineScanCount = 0;
-                if (maxLinesToScan == -1) maxLinesToScan = int.MaxValue;  // Unlimited
+                if (maxLinesToScan == -1)
+                    maxLinesToScan = int.MaxValue;  // Unlimited
 
-                for (var tmpLineIndex = lineIndex; tmpLineIndex > 0 && lineScanCount < maxLinesToScan; tmpLineIndex--)
-                {
-                    if (IsCommentLine(tmpLineIndex)) continue;
+                for (var tmpLineIndex = lineIndex; tmpLineIndex > 0 && lineScanCount < maxLinesToScan; tmpLineIndex--) {
+                    if (this.IsCommentLine(tmpLineIndex))
+                        continue;
 
                     lineScanCount++;
-                    if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("imaging to", System.StringComparison.Ordinal) == -1) continue;
+                    if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("imaging to", System.StringComparison.Ordinal) == -1)
+                        continue;
 
                     lineNum = tmpLineIndex;
-                    return GetOperationTime(this.LogFileText[tmpLineIndex]);
+                    return this.GetOperationTime(this.LogFileText[tmpLineIndex]);
                 }
-            }
-            catch
-            {
+            } catch {
             }
 
             lineNum = -1;
@@ -1534,30 +1403,27 @@ namespace ACPLogAnalyzer
         /// <param name="lineIndex">Log line index to start searching from</param>
         /// <param name="maxLinesToScan">Number of lines to scan before reporting an error</param>
         /// <returns>Return the DateTime of the event</returns>
-        private DateTime? FindFilterChangeOpEndTime(int lineIndex, int maxLinesToScan)
-        {
+        private DateTime? FindFilterChangeOpEndTime(int lineIndex, int maxLinesToScan) {
             // End:        "(taking"
             // Exclusions: "(guide star"
             // Data:       Time span from Begin to End 
-            try
-            {
+            try {
                 var lineScanCount = 0;
-                if (maxLinesToScan == -1) maxLinesToScan = int.MaxValue;  // Unlimited
+                if (maxLinesToScan == -1)
+                    maxLinesToScan = int.MaxValue;  // Unlimited
 
-                for (var tmpLineIndex = lineIndex; tmpLineIndex < LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++)
-                {
-                    if (IsCommentLine(tmpLineIndex)) continue;
+                for (var tmpLineIndex = lineIndex; tmpLineIndex < this.LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++) {
+                    if (this.IsCommentLine(tmpLineIndex))
+                        continue;
 
                     lineScanCount++;
                     if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("(taking", System.StringComparison.Ordinal) != -1)
-                        return GetOperationTime(this.LogFileText[tmpLineIndex]);
-                    
+                        return this.GetOperationTime(this.LogFileText[tmpLineIndex]);
+
                     if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("(guide star", System.StringComparison.Ordinal) != -1)
                         return null;
                 }
-            }
-            catch
-            {
+            } catch {
             }
             return null;
         }
@@ -1569,26 +1435,24 @@ namespace ACPLogAnalyzer
         /// <param name="maxLinesToScan">Number of lines to scan before reporting an error</param>
         /// <param name="lineNum"></param>
         /// <returns>Return the DateTime of the event</returns>
-        private DateTime? FindGuiderStartUpOpEndTime(int lineIndex, int maxLinesToScan, out int lineNum)
-        {
-            try
-            {
+        private DateTime? FindGuiderStartUpOpEndTime(int lineIndex, int maxLinesToScan, out int lineNum) {
+            try {
                 var lineScanCount = 0;
-                if (maxLinesToScan == -1) maxLinesToScan = int.MaxValue;  // Unlimited
+                if (maxLinesToScan == -1)
+                    maxLinesToScan = int.MaxValue;  // Unlimited
 
-                for (var tmpLineIndex = lineIndex; tmpLineIndex < LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++)
-                {
-                    if (IsCommentLine(tmpLineIndex)) continue;
+                for (var tmpLineIndex = lineIndex; tmpLineIndex < this.LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++) {
+                    if (this.IsCommentLine(tmpLineIndex))
+                        continue;
 
                     lineScanCount++;
-                    if (this.LogFileText[tmpLineIndex].ToLower() .IndexOf("autoguiding at", System.StringComparison.Ordinal) == -1) continue;
+                    if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("autoguiding at", System.StringComparison.Ordinal) == -1)
+                        continue;
 
                     lineNum = tmpLineIndex;
-                    return GetOperationTime(this.LogFileText[tmpLineIndex]);
+                    return this.GetOperationTime(this.LogFileText[tmpLineIndex]);
                 }
-            }
-            catch
-            {
+            } catch {
             }
 
             lineNum = -1;
@@ -1601,29 +1465,26 @@ namespace ACPLogAnalyzer
         /// <param name="lineIndex">Log line index to start searching from</param>
         /// <param name="maxLinesToScan">Number of lines to scan before reporting an error</param>
         /// <returns>Return the DateTime of the event</returns>
-        private DateTime? FindSlewOpEndTime(int lineIndex, int maxLinesToScan)
-        {
-            try
-            {
+        private DateTime? FindSlewOpEndTime(int lineIndex, int maxLinesToScan) {
+            try {
                 var lineScanCount = 0;
-                if (maxLinesToScan == -1) maxLinesToScan = int.MaxValue;  // Unlimited
+                if (maxLinesToScan == -1)
+                    maxLinesToScan = int.MaxValue;  // Unlimited
 
-                for (var tmpLineIndex = lineIndex; tmpLineIndex < LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++)
-                {
-                    if (IsCommentLine(tmpLineIndex)) continue;
+                for (var tmpLineIndex = lineIndex; tmpLineIndex < this.LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++) {
+                    if (this.IsCommentLine(tmpLineIndex))
+                        continue;
 
                     lineScanCount++;
                     if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("slew complete", System.StringComparison.Ordinal) != -1)
-                        return GetOperationTime(this.LogFileText[tmpLineIndex]);
-                    
+                        return this.GetOperationTime(this.LogFileText[tmpLineIndex]);
+
                     if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("updating pointing", System.StringComparison.Ordinal) != -1 ||
                         this.LogFileText[tmpLineIndex].ToLower().IndexOf("re-slew to target", System.StringComparison.Ordinal) != -1 ||
                         this.LogFileText[tmpLineIndex].ToLower().IndexOf("start slew to", System.StringComparison.Ordinal) != -1)
                         return null;
                 }
-            }
-            catch
-            {
+            } catch {
             }
             return null;
         }
@@ -1634,24 +1495,21 @@ namespace ACPLogAnalyzer
         /// <param name="lineIndex">Log line index to start searching from</param>
         /// <param name="maxLinesToScan">Number of lines to scan before reporting an error</param>
         /// <returns>Return the DateTime of the event</returns>
-        private DateTime? FindWaitOpEndTime(int lineIndex, int maxLinesToScan)
-        {
-            try
-            {
+        private DateTime? FindWaitOpEndTime(int lineIndex, int maxLinesToScan) {
+            try {
                 var lineScanCount = 0;
-                if (maxLinesToScan == -1) maxLinesToScan = int.MaxValue;  // Unlimited
+                if (maxLinesToScan == -1)
+                    maxLinesToScan = int.MaxValue;  // Unlimited
 
-                for (var tmpLineIndex = lineIndex; tmpLineIndex < LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++)
-                {
-                    if (IsCommentLine(tmpLineIndex)) continue;
+                for (var tmpLineIndex = lineIndex; tmpLineIndex < this.LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++) {
+                    if (this.IsCommentLine(tmpLineIndex))
+                        continue;
 
                     lineScanCount++;
                     if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("wait finished", System.StringComparison.Ordinal) != -1)
-                        return GetOperationTime(this.LogFileText[tmpLineIndex]);
+                        return this.GetOperationTime(this.LogFileText[tmpLineIndex]);
                 }
-            }
-            catch
-            {
+            } catch {
             }
             return null;
         }
@@ -1662,27 +1520,24 @@ namespace ACPLogAnalyzer
         /// <param name="lineIndex">Log line index to start searching from</param>
         /// <param name="maxLinesToScan">Number of lines to scan before reporting an error</param>
         /// <returns>Returns the datetime for the end of the op, or null if the time could not be determined (or the op failed)</returns>
-        private DateTime? FindPlateSolveOpEndTime(int lineIndex, int maxLinesToScan)
-        {
-            try
-            {
+        private DateTime? FindPlateSolveOpEndTime(int lineIndex, int maxLinesToScan) {
+            try {
                 var lineScanCount = 0;
-                if (maxLinesToScan == -1) maxLinesToScan = int.MaxValue;  // Unlimited
+                if (maxLinesToScan == -1)
+                    maxLinesToScan = int.MaxValue;  // Unlimited
 
-                for (var tmpLineIndex = lineIndex; tmpLineIndex < LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++)
-                {
-                    if (IsCommentLine(tmpLineIndex)) continue;
+                for (var tmpLineIndex = lineIndex; tmpLineIndex < this.LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++) {
+                    if (this.IsCommentLine(tmpLineIndex))
+                        continue;
 
                     lineScanCount++;
                     if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("target is now centered", System.StringComparison.Ordinal) != -1)
-                        return GetOperationTime(this.LogFileText[tmpLineIndex]);
-                    
+                        return this.GetOperationTime(this.LogFileText[tmpLineIndex]);
+
                     if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("**aiming failed", System.StringComparison.Ordinal) != -1)
                         return null;  // Tell the caller the op failed
                 }
-            }
-            catch
-            {
+            } catch {
             }
             return null;
         }
@@ -1693,28 +1548,25 @@ namespace ACPLogAnalyzer
         /// <param name="lineIndex">Log line index to start searching from</param>
         /// <param name="maxLinesToScan">Number of lines to scan before reporting an error</param>
         /// <returns>Returns the datetime for the end of the op, or null if the time could not be determined (or the op failed)</returns>
-        private DateTime? FindAllSkyPlateSolveOpEndTime(int lineIndex, int maxLinesToScan)
-        {
-            try
-            {
+        private DateTime? FindAllSkyPlateSolveOpEndTime(int lineIndex, int maxLinesToScan) {
+            try {
                 var lineScanCount = 0;
-                if (maxLinesToScan == -1) maxLinesToScan = int.MaxValue;  // Unlimited
+                if (maxLinesToScan == -1)
+                    maxLinesToScan = int.MaxValue;  // Unlimited
 
-                for (var tmpLineIndex = lineIndex; tmpLineIndex < LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++)
-                {
-                    if (IsCommentLine(tmpLineIndex)) continue;
+                for (var tmpLineIndex = lineIndex; tmpLineIndex < this.LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++) {
+                    if (this.IsCommentLine(tmpLineIndex))
+                        continue;
 
                     lineScanCount++;
                     if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("all-sky solution successful", System.StringComparison.Ordinal) != -1)
-                        return GetOperationTime(this.LogFileText[tmpLineIndex]);
+                        return this.GetOperationTime(this.LogFileText[tmpLineIndex]);
 
                     if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("all-sky solution was incorrect", System.StringComparison.Ordinal) != -1 ||
                         this.LogFileText[tmpLineIndex].ToLower().IndexOf("all-sky solution failed", System.StringComparison.Ordinal) != -1)
                         return null;  // Tell the caller the op failed
                 }
-            }
-            catch
-            {
+            } catch {
             }
             return null;  // Couldn't find the end of the op
         }
@@ -1726,12 +1578,10 @@ namespace ACPLogAnalyzer
         /// <param name="maxLinesToScan">Number of lines to scan before reporting an error</param>
         /// <param name="opDateTime"></param>
         /// <returns>Returns the datetime for the end of the op, or null if the time could not be determined (or the op failed)</returns>
-        private double FindHfdOpEndTime(int lineIndex, int maxLinesToScan, out DateTime? opDateTime)
-        {
+        private double FindHfdOpEndTime(int lineIndex, int maxLinesToScan, out DateTime? opDateTime) {
             opDateTime = null;
 
-            try
-            {
+            try {
                 // Example:
                 //
                 // 01:48:36   FocusMax auto-focus successful!
@@ -1739,30 +1589,26 @@ namespace ACPLogAnalyzer
                 //
 
                 var lineScanCount = 0;
-                if (maxLinesToScan == -1) maxLinesToScan = int.MaxValue;  // Unlimited
+                if (maxLinesToScan == -1)
+                    maxLinesToScan = int.MaxValue;  // Unlimited
 
-                for (var tmpLineIndex = lineIndex; tmpLineIndex < LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++)
-                {
-                    if (IsCommentLine(tmpLineIndex)) continue;
+                for (var tmpLineIndex = lineIndex; tmpLineIndex < this.LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++) {
+                    if (this.IsCommentLine(tmpLineIndex))
+                        continue;
 
                     lineScanCount++;
                     var tmpStr = this.LogFileText[tmpLineIndex].ToLower();
-                    if (tmpStr.IndexOf("hfd =", System.StringComparison.Ordinal) != -1)
-                    {
+                    if (tmpStr.IndexOf("hfd =", System.StringComparison.Ordinal) != -1) {
                         tmpStr = tmpStr.Substring(tmpStr.IndexOf("=", System.StringComparison.Ordinal) + 1);
-                        double tmpHfd;
-                        if (double.TryParse(tmpStr, out tmpHfd))
-                        {
-                            opDateTime = GetOperationTime(this.LogFileText[tmpLineIndex]);
+                        if (double.TryParse(tmpStr, out double tmpHfd)) {
+                            opDateTime = this.GetOperationTime(this.LogFileText[tmpLineIndex]);
                             return tmpHfd;
                         }
                     }
                     else if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("auto-focus successful!", System.StringComparison.Ordinal) != -1)
                         return -1;  // Tell the caller the op failed
                 }
-            }
-            catch
-            {
+            } catch {
             }
             return -1;
         }
@@ -1773,25 +1619,22 @@ namespace ACPLogAnalyzer
         /// <param name="lineIndex">The index of the line from which we start scanning</param>
         /// <param name="maxLinesToScan">The max number of lines to look for the op end condition before giving up</param>
         /// <returns>Returns true if ACP carried on imaging unguided after a guider failure, or otherwise</returns>
-        private bool FindGuiderFailureRecovery(int lineIndex, int maxLinesToScan)
-        {
-            try
-            {
+        private bool FindGuiderFailureRecovery(int lineIndex, int maxLinesToScan) {
+            try {
                 var lineScanCount = 0;
-                if (maxLinesToScan == -1) maxLinesToScan = int.MaxValue;  // Unlimited
+                if (maxLinesToScan == -1)
+                    maxLinesToScan = int.MaxValue;  // Unlimited
 
-                for (var tmpLineIndex = lineIndex; tmpLineIndex < LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++)
-                {
-                    if (IsCommentLine(tmpLineIndex)) continue;
+                for (var tmpLineIndex = lineIndex; tmpLineIndex < this.LogFileText.Count && lineScanCount < maxLinesToScan; tmpLineIndex++) {
+                    if (this.IsCommentLine(tmpLineIndex))
+                        continue;
 
                     lineScanCount++;
                     if (this.LogFileText[tmpLineIndex].ToLower().IndexOf("will try image again, this time unguided", System.StringComparison.Ordinal) != -1 ||
                         this.LogFileText[tmpLineIndex].ToLower().IndexOf("**guiding failed, continuing unguided", System.StringComparison.Ordinal) != -1)
                         return true;
                 }
-            }
-            catch
-            {
+            } catch {
             }
             return false;
         }
@@ -1801,20 +1644,16 @@ namespace ACPLogAnalyzer
         /// </summary>
         /// <param name="text">The string containing the datetime</param>
         /// <returns>A nullable DateTime object containing the datetime of the operation (which could be null)</returns>
-        public DateTime? GetOperationTime(string text)
-        {
+        public DateTime? GetOperationTime(string text) {
             DateTime? dt = null;
-            try
-            {
+            try {
                 var tmpStr = text.Trim().Substring(0, "xx:xx:xx".Length);
                 var hrs = int.Parse(tmpStr.Substring(0, 2));
                 var mins = int.Parse(tmpStr.Substring(3, 2));
                 var secs = int.Parse(tmpStr.Substring(6, 2));
 
                 dt = this.StartDate != null ? new DateTime(this.StartDate.Value.Year, this.StartDate.Value.Month, this.StartDate.Value.Day, hrs, mins, secs, 0) : new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hrs, mins, secs, 0);
-            }
-            catch
-            {
+            } catch {
             }
 
             return dt;
@@ -1825,14 +1664,10 @@ namespace ACPLogAnalyzer
         /// </summary>
         /// <param name="text">The string containing the datetime</param>
         /// <returns>A string representation of a DateTime object containing the datetime of the operation (which could be null)</returns>
-        public string GetOperationTimeText(string text)
-        {
-            try
-            {
+        public string GetOperationTimeText(string text) {
+            try {
                 return text.Trim().Substring(0, "xx:xx:xx".Length);
-            }
-            catch
-            {
+            } catch {
             }
 
             return "";
@@ -1844,26 +1679,25 @@ namespace ACPLogAnalyzer
         /// <param name="startDate">The date of the event</param>
         /// <param name="eventType">The type of event</param>
         /// <returns></returns>
-        private bool HasLogEventBeenCaptured(DateTime? startDate, LogEventType eventType)
-        {
+        private bool HasLogEventBeenCaptured(DateTime? startDate, LogEventType eventType) {
             if (startDate == null)
                 return false;
 
             var queryResults =
                 from le in this.LogEvents
-                where (le.EventType == eventType && 
-                       le.StartDate != null && 
+                where (le.EventType == eventType &&
+                       le.StartDate != null &&
                        le.StartDate.Value.CompareTo(startDate.Value) == 0)
                 select le;
 
             return queryResults.Any();
         }
 
-        private DateTime? CheckOpStartEndTime(DateTime? startDate, DateTime? endDate)
-        {
-            if (startDate == null || endDate == null) return null;
+        private DateTime? CheckOpStartEndTime(DateTime? startDate, DateTime? endDate) {
+            if (startDate == null || endDate == null)
+                return null;
 
-            if (endDate < startDate) 
+            if (endDate < startDate)
                 endDate = endDate.Value.AddDays(1);  // Can happen in a log when the time flips over to 00:00:00 at midnight
 
             return endDate;

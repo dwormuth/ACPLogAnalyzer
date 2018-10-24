@@ -269,5 +269,11 @@
     <Setting Name="Show_AllSky_Fail_Count_Overall" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="Parser_Culture" Type="System.String" Scope="User">
+      <Value Profile="(Default)">system</Value>
+    </Setting>
+    <Setting Name="Parser_Encoding" Type="System.String" Scope="User">
+      <Value Profile="(Default)">system</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
