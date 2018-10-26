@@ -1,7 +1,7 @@
 ﻿<Window x:Class="ACPLogAnalyzer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ACP Log Analyzer" Height="671" Width="1031" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Loaded="WindowLoaded">
+        Title="ACP Log Analyzer" Height="671" Width="1031" WindowStartupLocation="CenterScreen" Loaded="WindowLoaded" ResizeMode="CanMinimize">
     <Grid Name="MainGrid">
         <GroupBox Header="Report (double-click to view in editor)" Height="556" HorizontalAlignment="Left" Margin="610,5,0,0" VerticalAlignment="Top" Width="399">
             <Grid>
