@@ -1,27 +1,27 @@
 ﻿<Window x:Class="ACPLogAnalyzer.Update"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Check for updates to ACP Log Analyzer" Height="547" Width="548" WindowStartupLocation="CenterScreen" Activated="WindowActivated" ResizeMode="NoResize" Loaded="WindowLoaded">
+        Title="Check for updates to ACP Log Analyzer" Height="543.8" Width="548" WindowStartupLocation="CenterScreen" Activated="WindowActivated" ResizeMode="NoResize" Loaded="WindowLoaded">
     <Grid>
         <Label Content="An update is available" Height="43" HorizontalAlignment="Left" Name="LabelTitle" VerticalAlignment="Top" Width="518" HorizontalContentAlignment="Center" FontSize="20" FontStyle="Normal" FontWeight="Bold" Margin="12,0,0,0" />
         <Label Content="Version running:" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="12,49,0,0" Name="LabelVersionRunningx" Width="108" FontSize="13" FontWeight="Normal" VerticalAlignment="Top" />
         <Label Content="Version available:" FontSize="13" FontWeight="Normal" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="12,75,0,0" Name="LabelVersionAvailablex" VerticalAlignment="Top" Width="108" />
-        <ProgressBar Height="13" HorizontalAlignment="Left" Margin="197,89,0,0" Name="ProgressBarDownload" VerticalAlignment="Top" Width="235" Visibility="Visible" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="#FF47EF15" />
-        <Button Content="Download Update" Height="35" HorizontalAlignment="Left" Margin="197,48,0,0" Name="ButtonDownloadUpdate" VerticalAlignment="Top" Width="235" Click="ButtonDownloadUpdateClick" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-        <CheckBox Content="Always check for updates" IsChecked="{Binding Source={StaticResource Settings}, Path=Default.Always_Check_For_Updates}" Height="26" HorizontalAlignment="Left" Margin="122,108,0,0" Name="CheckBoxCheck4Updates" VerticalAlignment="Top" FontSize="14" Width="186" />
+        <ProgressBar Height="24" HorizontalAlignment="Left" Margin="197,78,0,0" Name="ProgressBarDownload" VerticalAlignment="Top" Width="235" Visibility="Visible" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="#FF47EF15" />
+        <Button Content="Download Update" Height="25" HorizontalAlignment="Left" Margin="197,48,0,0" Name="ButtonDownloadUpdate" VerticalAlignment="Top" Width="235" Click="ButtonDownloadUpdateClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+        <CheckBox Content="Always check for updates" IsChecked="{Binding Source={StaticResource Settings}, Path=Default.Always_Check_For_Updates}" Height="26" HorizontalAlignment="Left" Margin="122,111,0,0" Name="CheckBoxCheck4Updates" VerticalAlignment="Top" FontSize="13" Width="186" />
         <TextBox Height="25" HorizontalAlignment="Left" Margin="122,77,0,0" Name="TextBoxAvailable" VerticalAlignment="Top" Width="69" FontSize="13" FontWeight="Bold" TextAlignment="Center" />
         <TextBox Height="25" HorizontalAlignment="Left" Margin="122,48,0,0" Name="TextBoxRunning" VerticalAlignment="Top" Width="69" FontSize="13" FontWeight="Bold" TextAlignment="Center" />
-        <GroupBox Header="Release Notes (requires web connection)" Height="323" HorizontalAlignment="Left" Margin="8,140,0,0" Name="GroupBox1" VerticalAlignment="Top" Width="524">
-            <Grid>
+        <GroupBox Header="Release Notes (requires web connection)" HorizontalAlignment="Left" Margin="8,140,0,40" Name="GroupBox1" Width="524">
+            <Grid Margin="0,0,0.2,0.4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="234*" />
                     <ColumnDefinition Width="278*" />
                 </Grid.ColumnDefinitions>
-                <WebBrowser Height="287" HorizontalAlignment="Left" Margin="6,6,0,0" Name="WebBrowserRelNotes" VerticalAlignment="Top" Width="500" Grid.ColumnSpan="2" LoadCompleted="WebBrowserRelNotesLoadCompleted" />
+                <WebBrowser Height="299" HorizontalAlignment="Left" Margin="6,6,0,0" Name="WebBrowserRelNotes" VerticalAlignment="Top" Width="500" Grid.ColumnSpan="2" LoadCompleted="WebBrowserRelNotesLoadCompleted" />
             </Grid>
-        </GroupBox>   
+        </GroupBox>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
-            <Button Content="No Thanks" Height="35" Name="ButtonClose" Click="ButtonCloseClick" Width="235" Margin="160,0,0,7" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Button Content="No Thanks" Height="25" Name="ButtonClose" Click="ButtonCloseClick" Width="235" Margin="160,0,0,7" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
         </StackPanel>
     </Grid>
 </Window>

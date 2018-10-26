@@ -200,27 +200,32 @@ namespace ACPLogAnalyzer
                 System.IO.Directory.Exists(ComboBoxPath.SelectedValue.ToString()))
                 ofd.InitialDirectory = ComboBoxPath.SelectedValue.ToString();
 
-            ofd.Multiselect = false;
+            ofd.Multiselect = true;
             ofd.DefaultExt = ".log"; // Default file extension
-            ofd.Filter = "LOG|*.log"; // Filter files by extension
+            ofd.Filter = "Logs (*.log)|*.log|All files (*.*)|*.*"; // Filter files by extension
             var result = ofd.ShowDialog();
-            if (result == false) return;
-
-            // Is this an ACP log file?
-            if (!CheckLogIsAcpLog(ofd.FileName))
+            if (result == false)
             {
-                MessageBox.Show("The selected log is not a valid ACP log", "Log Not Added");
                 return;
             }
 
-            if (!IsInList(ListBoxLogs.Items, ofd.FileName))
-            {
-                ListBoxLogs.Items.Add(ofd.FileName);
-                UpdateLogListCount(ListBoxLogs.Items.Count);
-            }
-            else
-            {
-                MessageBox.Show("The selected log is already in the list", "Log Not Added");
+            foreach (string filename in ofd.FileNames) {
+                // Is this an ACP log file?
+                if (!CheckLogIsAcpLog(filename))
+                {
+                    MessageBox.Show("File \"" + filename + "\" is not a valid ACP log", "Log Not Added");
+                    continue;
+                }
+
+                if (!IsInList(ListBoxLogs.Items, filename))
+                {
+                    ListBoxLogs.Items.Add(filename);
+                    UpdateLogListCount(ListBoxLogs.Items.Count);
+                }
+                else
+                {
+                    MessageBox.Show("File \"" + filename + "\" is already in the list", "Log Not Added");
+                }
             }
         }
 
@@ -438,9 +443,10 @@ namespace ACPLogAnalyzer
 
         private void ButtonConfigPlotClick(object sender, RoutedEventArgs e)
         {
-            var cfgWnd = new ConfigPlot();
-            cfgWnd.RestartConfig = _configRestart;
-            cfgWnd.RestartTab = _configRestartTab;
+            var cfgWnd = new ConfigPlot {
+                RestartConfig = _configRestart,
+                RestartTab = _configRestartTab
+            };
             cfgWnd.ShowDialog();
             if (cfgWnd.RestartConfig)
             {
@@ -1173,6 +1179,11 @@ namespace ACPLogAnalyzer
             // Now create the (series 2) datapoints...
             foreach (var kvp in _grDataSeries1)
                 _grDataSeries2.Add(new KeyValuePair<object, object>(kvp.Key, tmpAvg));  // Add the average
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            var cfgWnd = new ConfigParser();
+            cfgWnd.ShowDialog();
         }
     }
 }

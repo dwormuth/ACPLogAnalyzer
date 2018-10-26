@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ACPLogAnalyzer"
-#define MyAppVersion "1.36"
+#define MyAppVersion "1.37"
 #define MyAppPublisher "ACPLogAnalyzer"
 #define MyAppURL "http://ACPLogAnalyzer.org"
 #define MyAppExeName "ACPLogAnalyzer.exe"
@@ -24,6 +24,7 @@ DisableProgramGroupPage=yes
 OutputBaseFilename=ACPLogAnalyzerSetup
 Compression=lzma
 SolidCompression=yes
+SetupIconFile=ACPLogAnalyzer\ACPLogAnalyzerIcons.ico
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -33,16 +34,18 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "C:\Users\dwormuth\Documents\source\rarcher\ACPLogAnalyzer\ACPLogAnalyzer\bin\Release\ACPLogAnalyzer.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "ACPLogAnalyzer\bin\Release\ACPLogAnalyzer.exe"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 Source: "ACPLogAnalyzer\bin\Release\ACPLogAnalyzer.application"; DestDir: "{app}"; Flags: ignoreversion
 Source: "ACPLogAnalyzer\bin\Release\ACPLogAnalyzer.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "ACPLogAnalyzer\bin\Release\ACPLogAnalyzer.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion
-Source: "ACPLogAnalyzer\bin\Release\ACPLogAnalyzer.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "ACPLogAnalyzer\bin\Release\ACPLogAnalyzer.vshost.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "ACPLogAnalyzer\bin\Release\ACPLogAnalyzer.vshost.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+;Source: "ACPLogAnalyzer\bin\Release\ACPLogAnalyzer.pdb"; DestDir: "{app}"; Flags: ignoreversion
+;Source: "ACPLogAnalyzer\bin\Release\ACPLogAnalyzer.vshost.exe"; DestDir: "{app}"; Flags: ignoreversion
+;Source: "ACPLogAnalyzer\bin\Release\ACPLogAnalyzer.vshost.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "ACPLogAnalyzer\bin\Release\System.Windows.Controls.DataVisualization.Toolkit.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "ACPLogAnalyzer\bin\Release\System.Windows.Controls.DataVisualization.Toolkit.VisualStudio.Design.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "ACPLogAnalyzer\bin\Release\System.Windows.Controls.Input.Toolkit.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "ACPLogAnalyzer\bin\Release\System.Windows.Controls.Layout.Toolkit.dll"; DestDir: "{app}"; Flags: ignoreversion
+;Source: "ACPLogAnalyzer\bin\Release\System.Windows.Controls.DataVisualization.Toolkit.VisualStudio.Design.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "ACPLogAnalyzer\bin\Release\WPFToolkit.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]

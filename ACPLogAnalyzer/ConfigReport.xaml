@@ -7,7 +7,7 @@
         WindowStartupLocation="CenterScreen" 
         ShowInTaskbar="True" 
         ResizeMode="NoResize">
-    <Grid>
+    <Grid Margin="0,0,-0.4,-2.4">
         <ScrollViewer CanContentScroll="True" Height="300" HorizontalAlignment="Left" Margin="12,33,0,0" Name="ScrollViewerReportSummary" VerticalAlignment="Top" Width="315" ClipToBounds="False" VerticalScrollBarVisibility="Auto">
             <StackPanel Height="300" Width="315">
                 <CheckBox HorizontalAlignment="Left" IsChecked="{Binding Source={StaticResource Settings}, Path=Default.Show_Report_Summary}" Content="Show summary" Height="16" VerticalAlignment="Top" Width="205" ToolTip="Shows the report summary if checked, otherwise the summary is not displayed" Margin="7,7,0,0" />

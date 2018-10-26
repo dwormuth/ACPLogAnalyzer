@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace ACPLogAnalyzer
 {
@@ -39,7 +40,13 @@ namespace ACPLogAnalyzer
 
 			try
 			{
-				sr = new StreamReader(_path);
+                Encoding encoding;
+                if(Properties.Settings.Default.Parser_Encoding.Equals("system")) {
+                    encoding = Encoding.Default;
+                } else {
+                    encoding = Encoding.GetEncoding(Properties.Settings.Default.Parser_Encoding); 
+                }
+				sr = new StreamReader(_path, encoding);
 				while(true)
 				{
 					var line = sr.ReadLine();  // Holds the current line we're reading

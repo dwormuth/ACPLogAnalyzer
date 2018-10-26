@@ -1,7 +1,7 @@
 ﻿<Window x:Class="ACPLogAnalyzer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ACP Log Analyzer" Height="671" Width="1031" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Loaded="WindowLoaded">
+        Title="ACP Log Analyzer" Height="671" Width="1031" WindowStartupLocation="CenterScreen" Loaded="WindowLoaded" ResizeMode="CanMinimize">
     <Grid Name="MainGrid">
         <GroupBox Header="Report (double-click to view in editor)" Height="556" HorizontalAlignment="Left" Margin="610,5,0,0" VerticalAlignment="Top" Width="399">
             <Grid>
@@ -40,11 +40,12 @@
         </GroupBox>
         <GroupBox Header="Find logs" Height="94" HorizontalAlignment="Left" Margin="8,65,0,0" Name="GroupBox3" VerticalAlignment="Top" Width="594">
             <Grid>
-                <Button Content="Add All Logs In Path" Height="25" HorizontalAlignment="Left" Margin="391,39,0,0" Name="ButtonReadLogs" VerticalAlignment="Top" Width="185" Click="ButtonReadLogsClick" ToolTip="Search the directory (and sub-directories) in the selected path for ACP log files" />
+                <Button Content="Add All Logs In Path" Height="25" HorizontalAlignment="Left" Margin="318,39,0,0" Name="ButtonReadLogs" VerticalAlignment="Top" Width="151" Click="ButtonReadLogsClick" ToolTip="Search the directory (and sub-directories) in the selected path for ACP log files" />
                 <Button Content="Select Path..." Height="23" HorizontalAlignment="Right" Margin="0,9,6,0" Name="ButtonPath" VerticalAlignment="Top" Width="98" Click="ButtonPathClick" ToolTip="Select a path to search for ACP log files" />
-                <Button IsEnabled="True" Content="Add Single Log ..." Height="25" HorizontalAlignment="Left" Margin="199,39,0,0" Name="ButtonLog" VerticalAlignment="Top" Width="185" Click="ButtonLogClick" ToolTip="Browse to select a single ACP log file" />
+                <Button IsEnabled="True" Content="Add Log(s) To List..." Height="25" HorizontalAlignment="Left" Margin="162,39,0,0" Name="ButtonLog" VerticalAlignment="Top" Width="151" Click="ButtonLogClick" ToolTip="Browse to select a single ACP log file" />
                 <ComboBox Height="23" HorizontalAlignment="Left" Margin="6,9,0,0" Name="ComboBoxPath" VerticalAlignment="Top" Width="463" AllowDrop="False" IsEditable="False" ToolTip="Select a path to search for ACP logs" />
-                <Button HorizontalAlignment="Left" Content="Clear Log List" Height="25" Margin="6,39,0,0" Name="ButtonClearLogList" Width="185" Click="ButtonClearLogListClick" VerticalAlignment="Top" ToolTip="Clear the list of log files" />
+                <Button HorizontalAlignment="Left" Content="Clear Log List" Height="25" Margin="6,39,0,0" Name="ButtonClearLogList" Width="151" Click="ButtonClearLogListClick" VerticalAlignment="Top" ToolTip="Clear the list of log files" />
+                <Button x:Name="ButtonConfigureLog" Content="Configure..." HorizontalAlignment="Left" Height="25" Margin="477,39,0,0" VerticalAlignment="Top" Width="98" Click="Button_Click"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Application" Height="63" HorizontalAlignment="Left" Margin="322,4,0,0" Name="GroupBox5" VerticalAlignment="Top" Width="280">

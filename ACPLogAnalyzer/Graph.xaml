@@ -7,13 +7,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"         
         Title="Data Plot" 
         Height="600" 
-        Width="900"    
-        WindowStyle="ToolWindow" 
+        Width="900" 
         UseLayoutRounding="True" 
         ShowInTaskbar="True" 
-        WindowStartupLocation="CenterScreen"> 
-    
+        WindowStartupLocation="CenterScreen">
+
     <Grid>
-        <local:GraphUserControl x:Name="GraphUc" VerticalAlignment="Stretch" Width="Auto" Height="Auto" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="227*"/>
+            <ColumnDefinition Width="353*"/>
+            <ColumnDefinition Width="312*"/>
+        </Grid.ColumnDefinitions>
+        <local:GraphUserControl x:Name="GraphUc" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Grid.ColumnSpan="3" Margin="0,0,10,0" />
     </Grid>
 </Window>
