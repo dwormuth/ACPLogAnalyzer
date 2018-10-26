@@ -1,22 +1,22 @@
 ﻿<Window x:Class="ACPLogAnalyzer.Help"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="About ACP Log Analyzer" Height="587" Width="726" WindowStartupLocation="CenterScreen">
+        Title="About ACP Log Analyzer" Height="566.2" Width="726" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="148*" />
             <RowDefinition Height="607*" />
         </Grid.RowDefinitions>
         <Label Content="ACP Log Analyzer" Height="33" HorizontalAlignment="Left" Margin="12,0,0,0" Name="Label1" VerticalAlignment="Top" Width="691" HorizontalContentAlignment="Center" FontSize="16" FontStyle="Normal" FontWeight="Bold" />
-        <Label Content="Copyright Russell Archer, 2011, 2012, 2013" Height="28" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="12,57,0,0" Name="Label2" VerticalAlignment="Top" Width="691" />
-        <TextBlock Height="24" HorizontalAlignment="Left" Margin="140,87,0,0" Name="TextBlock1" Text="This application may be freely used and distributed by the ACP community" VerticalAlignment="Top" Width="430" TextAlignment="Center" TextWrapping="Wrap" Grid.RowSpan="2" />
+        <Label Content="Copyright Russell Archer, 2011, 2012, 2013; David Wormuth, 2017, 2018; Igor Dulevich 2018" Height="28" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="154,57,0,0" Name="Label2" VerticalAlignment="Top" Width="549" />
+        <TextBlock Height="24" HorizontalAlignment="Left" Margin="159,87,0,0" Name="TextBlock1" Text="This application may be freely used and distributed by the ACP community" VerticalAlignment="Top" Width="549" TextAlignment="Left" TextWrapping="Wrap" Grid.RowSpan="2" />
         <TextBlock Height="23" HorizontalAlignment="Left" Name="TextBlock3" Text="With grateful thanks to ACP and astro-imaging wizard Jim McMillan, for all his help, encouragment, suggestions and feedback." TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="691" FontStyle="Italic" Margin="12,12,0,0" Grid.Row="1" />
         <TextBlock FontStyle="Normal" Height="24" HorizontalAlignment="Left" Margin="12,80,0,0" Name="TextBlock4" Text="This application is not a DC-3 Dreams product, nor is it in any way endorsed, recommended or supported by them. " TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="691" Grid.Row="1" />
         <Label Content="Version ..." HorizontalAlignment="Left" HorizontalContentAlignment="Center" Name="LabelVersion" Width="692" FontSize="14" FontWeight="Bold" Margin="12,27,0,48" />
         <StackPanel Height="40" HorizontalAlignment="Left" Margin="12,392,0,0" Name="StackPanel1" VerticalAlignment="Top" Width="692" Grid.Row="1">
-            <Button Content="OK" Height="36" Name="Button1" Width="129" Click="ButtonOkClick" />
+            <Button Content="OK" Height="25" x:Name="Button1" Width="129" Click="ButtonOkClick" Margin="282,0,281,0" />
         </StackPanel>
-        <TextBlock FontStyle="Italic" Height="40" HorizontalAlignment="Left" Margin="12,37,0,0" Name="TextBlock2" Text="Thanks also to Bob Denny, founder of DC-3 Dreams and the ASCOM initiative, and creator of the wonderful ACP, ACP Scheduler and ACP Planner suite of applications." TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="691" Grid.Row="1" />
+        <TextBlock FontStyle="Italic" Height="40" HorizontalAlignment="Left" Margin="12,37,0,0" Name="TextBlock2" Text="Thanks also to Bob Denny, founder of DC-3 Dreams and the ASCOM initiative,&#x0a;and creator of the wonderful ACP, ACP Scheduler and ACP Planner suite of applications." TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="691" Grid.Row="1" />
         <GroupBox Grid.Row="1" Header="Release Notes (requires web connection)" Height="276" HorizontalAlignment="Left" Margin="12,110,0,0" Name="GroupBox1" VerticalAlignment="Top" Width="691">
             <Grid>
                 <WebBrowser Height="247" HorizontalAlignment="Left" Margin="6,6,0,0" Name="WebBrowserRelNotes" VerticalAlignment="Top" Width="667" LoadCompleted="WebBrowserRelNotesLoadCompleted" />
